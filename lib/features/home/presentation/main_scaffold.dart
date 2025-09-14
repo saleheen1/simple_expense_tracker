@@ -35,7 +35,7 @@ class _MainScaffoldState extends State<MainScaffold> {
   Widget build(BuildContext context) {
     List<Widget> pages = [
       HomeTab(onMenuTap: _openDrawer, totalExpanse: '731', budget: '1000'),
-      HistoryTab(),
+      HistoryTab(totalExpanse: '731', budget: '1000'),
     ];
     final theme = CustomTheme.of(context);
 

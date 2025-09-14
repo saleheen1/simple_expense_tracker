@@ -17,7 +17,7 @@ class AmountCard extends StatelessWidget {
     final theme = CustomTheme.of(context);
 
     return Container(
-      padding: EdgeInsets.only(top: 20, bottom: 20, left: 20),
+      padding: EdgeInsets.only(top: 15, bottom: 15, left: 20),
       decoration: BoxDecoration(
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(5),
