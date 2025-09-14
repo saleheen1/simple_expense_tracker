@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
+import 'package:simple_expense_tracker/core/utils/custom_fab_location.dart';
 import 'package:simple_expense_tracker/core/widgets/home_drawer.dart';
 import 'package:simple_expense_tracker/features/history/history_tab.dart';
 import 'package:simple_expense_tracker/features/home/data/controller/navigation_controller.dart';
@@ -21,8 +22,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     loadAtStart();
   }
 
-  loadAtStart() async {
-  }
+  loadAtStart() async {}
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -32,7 +32,10 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> pages = [HomeTab(onMenuTap: _openDrawer), HistoryTab()];
+    List<Widget> pages = [
+      HomeTab(onMenuTap: _openDrawer, totalExpanse: '731', budget: '1000',),
+      HistoryTab(),
+    ];
     final theme = CustomTheme.of(context);
 
     return GetBuilder<NavigationController>(
@@ -43,21 +46,27 @@ class _MainScaffoldState extends State<MainScaffold> {
           body: pages[nc.selectedIndex],
           drawer: HomeDrawer(),
           bottomNavigationBar: BottomMenu(),
-
-          floatingActionButton: nc.selectedIndex != 0
-              ? null
-              : Container(
-                  decoration: BoxDecoration(
-                    color: theme.primary,
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    onPressed: () {
-                      // Get.to(() => AddZhikrPage());
-                    },
-                    icon: Icon(Icons.add, color: theme.bgColor),
-                  ),
+          floatingActionButtonLocation: CustomFABLocation(offsetY: 10),
+          floatingActionButton: Container(
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(
+              color: theme.primary,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: theme.primary.withOpacity(0.4),
+                  spreadRadius: 1,
+                  blurRadius: 10,
+                  offset: Offset(0, 5),
                 ),
+              ],
+            ),
+            child: GestureDetector(
+              onTap: () {},
+              child: Icon(Icons.add_rounded, color: theme.bgColor, size: 40),
+            ),
+          ),
         );
       },
     );
