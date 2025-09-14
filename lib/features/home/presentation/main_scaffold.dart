@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
 import 'package:simple_expense_tracker/core/utils/custom_fab_location.dart';
 import 'package:simple_expense_tracker/core/widgets/home_drawer.dart';
+import 'package:simple_expense_tracker/features/expanse/presentation/add_expanse_page.dart';
 import 'package:simple_expense_tracker/features/history/history_tab.dart';
 import 'package:simple_expense_tracker/features/home/data/controller/navigation_controller.dart';
 import 'package:simple_expense_tracker/features/home/presentation/home_tab.dart';
@@ -33,7 +34,7 @@ class _MainScaffoldState extends State<MainScaffold> {
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [
-      HomeTab(onMenuTap: _openDrawer, totalExpanse: '731', budget: '1000',),
+      HomeTab(onMenuTap: _openDrawer, totalExpanse: '731', budget: '1000'),
       HistoryTab(),
     ];
     final theme = CustomTheme.of(context);
@@ -63,7 +64,9 @@ class _MainScaffoldState extends State<MainScaffold> {
               ],
             ),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Get.to(AddExpansePage());
+              },
               child: Icon(Icons.add_rounded, color: theme.bgColor, size: 40),
             ),
           ),

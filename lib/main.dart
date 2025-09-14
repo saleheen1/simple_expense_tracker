@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return CustomTheme(
       customThemeData: darkTheme,
       child: GetMaterialApp(
-        title: 'Tasbih tracker',
+        title: 'Simple Expense Tracker',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
           primaryColor: darkTheme.primary,
