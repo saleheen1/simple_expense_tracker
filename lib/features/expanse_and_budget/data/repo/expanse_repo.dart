@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:simple_expense_tracker/core/database/database_helper.dart';
-import 'package:simple_expense_tracker/core/database/model/expanse_model.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/expanse_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ExpenseRepo {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
+  //===============
   // Create expense
+  //===============
   Future<void> createExpense(ExpenseModel expense) async {
     try {
       final db = await _dbHelper.database;
@@ -25,7 +27,9 @@ class ExpenseRepo {
     }
   }
 
+  //==================
   // Read all expenses
+  //==================
   Future<List<ExpenseModel>> getAllExpenses() async {
     try {
       final db = await _dbHelper.database;
