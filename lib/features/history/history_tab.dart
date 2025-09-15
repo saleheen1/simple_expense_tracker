@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
 import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
+import 'package:simple_expense_tracker/core/widgets/day_card.dart';
 import 'package:simple_expense_tracker/core/widgets/default_margin_widget.dart';
 import 'package:simple_expense_tracker/core/widgets/expanse_and_budget_card.dart';
 import 'package:simple_expense_tracker/core/widgets/expanse_card.dart';
+import 'package:simple_expense_tracker/core/widgets/month_card.dart';
 import 'package:simple_expense_tracker/core/widgets/notification_bar.dart';
 
 class HistoryTab extends StatelessWidget {
@@ -17,6 +20,8 @@ class HistoryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int selectedIndex = 0;
+
     return Scaffold(
       body: DefaultMarginWidget(
         child: Column(
@@ -30,17 +35,15 @@ class HistoryTab extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Container(
-                    color: Colors.blueAccent,
-                    height: 30,
+                  child: SizedBox(
+                    height: 35,
                     child: ListView.builder(
-                      itemCount: 300,
+                      itemCount: 5,
                       shrinkWrap: true,
-                      padding: EdgeInsets.zero,
                       physics: const AlwaysScrollableScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return Text('Month');
+                        return MonthCard(isSelected: selectedIndex == index);
                       },
                     ),
                   ),
@@ -55,17 +58,24 @@ class HistoryTab extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Container(
-                    color: Colors.green,
-                    height: 50,
+                  child: SizedBox(
+                    height: 75,
                     child: ListView.builder(
-                      itemCount: 300,
+                      itemCount: 10,
                       shrinkWrap: true,
-                      padding: EdgeInsets.zero,
                       physics: const AlwaysScrollableScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return Text('Month');
+                        if (index == 0) {
+                          return _allButton(context, selectedIndex == 0);
+                        } else {
+                          return DayCard(
+                            isSelected: false,
+                            date: '11',
+                            monthName: 'Feb',
+                            weekdayName: 'Sat',
+                          );
+                        }
                       },
                     ),
                   ),
@@ -124,6 +134,35 @@ class HistoryTab extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _allButton(BuildContext context, bool isSelected) {
+    final theme = CustomTheme.of(context);
+
+    return Container(
+      width: 50,
+      height: 75,
+      margin: EdgeInsets.only(right: 15),
+      decoration: BoxDecoration(
+        color: isSelected ? theme.primary : Colors.transparent,
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(
+          color: isSelected
+              ? Colors.transparent
+              : Colors.white.withValues(alpha: 0.5),
+          width: 1,
+        ),
+      ),
+      child: Center(
+        child: Text(
+          'All',
+          style: TextUtils.title3(
+            color: isSelected ? theme.bgColor : Colors.white,
+            context: context,
+          ),
         ),
       ),
     );
