@@ -5,19 +5,19 @@ import 'package:simple_expense_tracker/core/widgets/button_primary.dart';
 import 'package:simple_expense_tracker/core/widgets/custom_input.dart';
 import 'package:simple_expense_tracker/core/widgets/default_margin_widget.dart';
 
-class AddExpansePage extends StatelessWidget {
-  const AddExpansePage({super.key});
+class AddBudgetPage extends StatelessWidget {
+  const AddBudgetPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbarCommon('Add expanse', context),
+      appBar: appbarCommon('Add budget', context),
       body: DefaultMarginWidget(
         child: Column(
           children: [
             gapH(15),
             //==================
-            //Month and Date
+            //Month and Year
             //==================
             Row(
               children: [
@@ -30,30 +30,16 @@ class AddExpansePage extends StatelessWidget {
                 gapW(20),
 
                 Expanded(
-                  child: CustomInput(labelText: 'Date', hintText: 'today'),
+                  child: CustomInput(labelText: 'Year', hintText: 'this year'),
                 ),
               ],
             ),
-            gapH(50),
+            gapH(40),
 
             //===================
-            //Short description and cost
+            //Budget
             //===================
-            Row(
-              children: [
-                Expanded(
-                  child: CustomInput(
-                    labelText: 'Short description',
-                    hintText: 'Brought fruits',
-                  ),
-                ),
-                gapW(20),
-
-                Expanded(
-                  child: CustomInput(labelText: 'Cost', hintText: 'Enter cost'),
-                ),
-              ],
-            ),
+            CustomInput(labelText: 'Budget', hintText: 'Enter budget'),
 
             Spacer(),
             ButtonPrimary(text: 'Save', onPressed: () {}),

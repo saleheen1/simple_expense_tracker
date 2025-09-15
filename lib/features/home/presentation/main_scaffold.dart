@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
 import 'package:simple_expense_tracker/core/utils/custom_fab_location.dart';
 import 'package:simple_expense_tracker/core/widgets/home_drawer.dart';
-import 'package:simple_expense_tracker/features/expanse/presentation/add_expanse_page.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/presentation/add_expanse_page.dart';
 import 'package:simple_expense_tracker/features/history/history_tab.dart';
 import 'package:simple_expense_tracker/features/home/data/controller/navigation_controller.dart';
 import 'package:simple_expense_tracker/features/home/presentation/home_tab.dart';
@@ -56,7 +56,7 @@ class _MainScaffoldState extends State<MainScaffold> {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: theme.primary.withOpacity(0.4),
+                  color: theme.primary.withValues(alpha: 0.4),
                   spreadRadius: 1,
                   blurRadius: 10,
                   offset: Offset(0, 5),

@@ -95,7 +95,6 @@ class HistoryTab extends StatelessWidget {
                 //=============================
                 Expanded(
                   child: ExpanseAndBudgetCard(
-                    title: 'Total expanse',
                     amount: totalExpanse,
                   ),
                 ),
@@ -105,7 +104,10 @@ class HistoryTab extends StatelessWidget {
                 //Budget
                 //=============================
                 Expanded(
-                  child: ExpanseAndBudgetCard(title: 'Budget', amount: budget),
+                  child: ExpanseAndBudgetCard(
+                    isBudgetCard: true,
+                    amount: budget,
+                  ),
                 ),
               ],
             ),

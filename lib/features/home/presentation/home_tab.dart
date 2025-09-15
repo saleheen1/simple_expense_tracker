@@ -46,7 +46,6 @@ class HomeTab extends StatelessWidget {
                     //=============================
                     Expanded(
                       child: ExpanseAndBudgetCard(
-                        title: 'Total expanse',
                         amount: totalExpanse,
                       ),
                     ),
@@ -57,7 +56,7 @@ class HomeTab extends StatelessWidget {
                     //=============================
                     Expanded(
                       child: ExpanseAndBudgetCard(
-                        title: 'Budget',
+                        isBudgetCard: true,
                         amount: budget,
                       ),
                     ),
