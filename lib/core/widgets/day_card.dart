@@ -27,7 +27,9 @@ class DayCard extends StatelessWidget {
         color: isSelected ? theme.cardColor : Colors.transparent,
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          color: isSelected ? Colors.transparent : Colors.white.withOpacity(.5),
+          color: isSelected
+              ? Colors.transparent
+              : Colors.white.withValues(alpha: 0.5),
           width: 1,
         ),
       ),
