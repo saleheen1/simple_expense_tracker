@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
-import 'package:simple_expense_tracker/core/utils/custom_fab_location.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:flutter/material.dart';
 import 'package:simple_expense_tracker/core/widgets/home_drawer.dart';
-import 'package:simple_expense_tracker/features/expanse_and_budget/presentation/add_expanse_page.dart';
+import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
 import 'package:simple_expense_tracker/features/history/history_tab.dart';
-import 'package:simple_expense_tracker/features/home/data/controller/navigation_controller.dart';
+import 'package:simple_expense_tracker/core/utils/custom_fab_location.dart';
 import 'package:simple_expense_tracker/features/home/presentation/home_tab.dart';
 import 'package:simple_expense_tracker/features/home/presentation/widgets/bottom_menu.dart';
+import 'package:simple_expense_tracker/features/home/data/controller/navigation_controller.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/presentation/add_expanse_page.dart';
 
 class MainScaffold extends StatefulWidget {
   const MainScaffold({super.key});
@@ -23,7 +25,13 @@ class _MainScaffoldState extends State<MainScaffold> {
     loadAtStart();
   }
 
-  loadAtStart() async {}
+  loadAtStart() async {
+    /// Print the physical location of the database file on device/emulator
+    final dbPath = join(await getDatabasesPath(), 'simple_expense_tracker.db');
+    debugPrint(
+      '[main_scaffold.dart]📍 DB 🗂️ for this project located at(applicable for simulators\' only): $dbPath',
+    );
+  }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 

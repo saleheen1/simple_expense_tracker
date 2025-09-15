@@ -44,11 +44,7 @@ class HomeTab extends StatelessWidget {
                     //=============================
                     //Total expanse
                     //=============================
-                    Expanded(
-                      child: ExpanseAndBudgetCard(
-                        amount: totalExpanse,
-                      ),
-                    ),
+                    Expanded(child: ExpanseAndBudgetCard(amount: totalExpanse)),
                     gapW(20),
 
                     //=============================
