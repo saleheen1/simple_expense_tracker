@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
 
 class LoaderWidget extends StatelessWidget {
   final Widget child;
@@ -18,31 +19,29 @@ class LoaderWidget extends StatelessWidget {
         child,
         if (isLoading)
           Positioned.fill(
-              child: WillPopScope(
-                  onWillPop: () async => !isLoading,
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(radius ?? 0),
-                      ),
-                      child: Center(
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 1)
-                                ]),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 15),
-                            child: const SizedBox(
-                                width: 25,
-                                height: 25,
-                                child: CircularProgressIndicator())),
-                      )))),
+            child: PopScope(
+              canPop: !isLoading,
+              child: Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: CustomTheme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 15,
+                  ),
+                  child: const SizedBox(
+                    width: 25,
+                    height: 25,
+                    child: CircularProgressIndicator(
+                      color: Color(0xff34B700)
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }
