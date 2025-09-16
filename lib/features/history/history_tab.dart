@@ -82,7 +82,7 @@ class HistoryTab extends StatelessWidget {
                 ),
               ],
             ),
-            gapH(50),
+            gapH(30),
 
             //=============================
             //Total expanse and budget
@@ -93,11 +93,7 @@ class HistoryTab extends StatelessWidget {
                 //=============================
                 //Total expanse
                 //=============================
-                Expanded(
-                  child: ExpenseAndBudgetCard(
-                    amount: totalExpanse,
-                  ),
-                ),
+                Expanded(child: ExpenseAndBudgetCard(amount: totalExpanse)),
                 gapW(20),
 
                 //=============================
@@ -111,7 +107,7 @@ class HistoryTab extends StatelessWidget {
                 ),
               ],
             ),
-            gapH(40),
+            gapH(20),
 
             //=========================
             //Expanses list
