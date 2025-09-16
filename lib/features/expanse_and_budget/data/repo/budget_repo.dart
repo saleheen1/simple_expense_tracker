@@ -10,7 +10,7 @@ class BudgetRepo extends GetxController {
   //===============
   // Create budget
   //===============
-  Future<void> createBudget({
+  Future<bool> createBudget({
     required int year,
     required int month,
     required double budget,
@@ -23,11 +23,11 @@ class BudgetRepo extends GetxController {
         'month': month,
         'budget': budget,
       }, conflictAlgorithm: ConflictAlgorithm.replace);
-      debugPrint(
-        '[budget_repo] Budget: $budget inserted, year: $year, and month: month',
-      );
+
+      return true;
     } catch (e) {
-      debugPrint('Error inserting budget: $e');
+      debugPrint('budget_repo]: Error inserting budget: $e');
+      return false;
     }
   }
 

@@ -47,7 +47,7 @@ class BudgetController extends GetxController {
       showErrorSnackbar('Error', 'Please fill all the required fields');
       return false;
     }
-    if (int.tryParse(budgetInputController.text) == null) {
+    if (double.tryParse(budgetInputController.text) == null) {
       showErrorSnackbar('Error', 'Please enter valid budget amount');
       return false;
     }
@@ -70,7 +70,9 @@ class BudgetController extends GetxController {
       budget: double.parse(budgetInputController.text),
     );
 
-    debugPrint('[Budget Controller] Budget added');
+    debugPrint(
+      '[budget_controller.dart] Budget added, month number: ${months.indexOf(selectedMonth)}, year: ${int.parse(selectedYear)}, budget: ${double.parse(budgetInputController.text)}',
+    );
 
     setLoading(false);
     return true;
