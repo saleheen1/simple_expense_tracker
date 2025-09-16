@@ -7,6 +7,7 @@ import 'package:simple_expense_tracker/core/widgets/expense_and_budget_card.dart
 import 'package:simple_expense_tracker/core/widgets/expense_card.dart';
 import 'package:simple_expense_tracker/core/widgets/home_appbar.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/budget_controller.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/expense_controller.dart';
 
 class HomeTab extends StatelessWidget {
   final VoidCallback onMenuTap;
@@ -22,57 +23,61 @@ class HomeTab extends StatelessWidget {
           child: DefaultMarginWidget(
             child: GetBuilder<BudgetController>(
               builder: (bc) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    gapH(15),
-                    //=============================
-                    //Total expanse and budget
-                    //=============================
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                return GetBuilder<ExpenseController>(
+                  builder: (ec) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        gapH(15),
                         //=============================
-                        //Total expanse
+                        //Total expanse and budget
                         //=============================
-                        Expanded(child: ExpenseAndBudgetCard(amount: '731')),
-                        gapW(20),
-                
-                        //=============================
-                        //Budget
-                        //=============================
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //=============================
+                            //Total expanse
+                            //=============================
+                            Expanded(child: ExpenseAndBudgetCard(amount: '${ec.totalExpenseOfMonth}')),
+                            gapW(20),
+                    
+                            //=============================
+                            //Budget
+                            //=============================
+                            Expanded(
+                              child: ExpenseAndBudgetCard(
+                                isBudgetCard: true,
+                                amount: '${bc.budgetOfGivenMonth}',
+                              ),
+                            ),
+                          ],
+                        ),
+                        gapH(20),
+                    
+                        //=========================
+                        //Expanses list
+                        //=========================
+                        Text(style: TextUtils.title3(context: context), 'Expanse list'),
+                        gapH(20),
+                    
                         Expanded(
-                          child: ExpenseAndBudgetCard(
-                            isBudgetCard: true,
-                            amount: '${bc.budgetOfCurrentMonth}',
+                          child: ListView.builder(
+                            itemCount: ec.expensesOfGivenMonth.length,
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return ExpanseCard(
+                                index: index,
+                                title: ec.expensesOfGivenMonth[index].name,
+                                amount: ec.expensesOfGivenMonth[index].cost.toString(),
+                              );
+                            },
                           ),
                         ),
                       ],
-                    ),
-                    gapH(20),
-                
-                    //=========================
-                    //Expanses list
-                    //=========================
-                    Text(style: TextUtils.title3(context: context), 'Expanse list'),
-                    gapH(20),
-                
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: 3,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return ExpanseCard(
-                            index: index,
-                            title: 'Fruits and shopping',
-                            amount: '689',
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                    );
+                  }
                 );
               }
             ),

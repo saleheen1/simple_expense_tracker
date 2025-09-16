@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:simple_expense_tracker/core/utils/snackbars.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/expense_model.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/repo/expense_repo.dart';
@@ -18,7 +19,9 @@ class ExpenseController extends GetxController {
   final dateController = TextEditingController();
 
   bool filterBasicDetails() {
-    if (nameController.text.isEmpty || amountController.text.isEmpty || dateController.text.isEmpty) {
+    if (nameController.text.isEmpty ||
+        amountController.text.isEmpty ||
+        dateController.text.isEmpty) {
       showErrorSnackbar('Error', 'Please fill all the required fields');
       return false;
     }
@@ -39,28 +42,61 @@ class ExpenseController extends GetxController {
     // artificial delay for loader widget to show up.(inproved UX)
     await Future.delayed(const Duration(seconds: 1));
 
+    // Parse the user-entered date
+    final parsedDate = DateFormat('MMM d, yyyy').parse(dateController.text);
+    final isoDate = DateFormat('yyyy-MM-dd').format(parsedDate);
+
     final expense = ExpenseModel(
       name: nameController.text,
-      date: dateController.text,
+      date: isoDate,
       cost: double.parse(amountController.text),
     );
 
     final success = await expenseRepo.upsertExpense(expense);
 
     if (success) {
-      debugPrint('[expense_controller.dart] Expense added: ${expense.toJson()}');
+      final now = DateTime.now();
+      final currentYear = now.year;
+      final currentMonth = now.month;
+      getExpensesByMonth(year: currentYear, month: currentMonth);
+      debugPrint(
+        '[expense_controller.dart] Expense added: ${expense.toJson()}',
+      );
     }
 
     setLoading(false);
+    Get.back();
     return success;
   }
 
-  //==============
+  //================
   // Fetch expenses
-  //==============
-  Future<List<ExpenseModel>> fetchExpenses() async {
-    final expenses = await expenseRepo.getAllExpenses();
-    debugPrint('Controller: ${expenses.length} expenses fetched');
-    return expenses;
+  //================
+  List<ExpenseModel> expensesOfGivenMonth = [];
+  double totalExpenseOfMonth = 0;
+
+  Future<void> getExpensesByMonth({
+    required int year,
+    required int month,
+  }) async {
+    
+    final fetchedExpenses = await expenseRepo.fetchExpensesByMonth(
+      year: year,
+      month: month,
+    );
+    expensesOfGivenMonth = fetchedExpenses;
+
+    double totalExpenses = 0.0;
+    for (var e in fetchedExpenses) {
+      totalExpenses += e.cost;
+    }
+    totalExpenseOfMonth = double.parse(totalExpenses.toStringAsFixed(2));
+
+    debugPrint(
+      '[expense_controller]: total expense of the month: $totalExpenseOfMonth, '
+      'and expenses details: ${fetchedExpenses.map((e) => e.toJson()).toList()}',
+    );
+
+    update();
   }
 }

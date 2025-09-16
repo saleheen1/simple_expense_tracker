@@ -16,11 +16,6 @@ class ExpenseRepo extends GetxController {
 
       await db.insert(
         'expenses',
-        // {
-        //   'date': expense.date,
-        //   'name': expense.name,
-        //   'cost': expense.cost,
-        // },
         expense.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
@@ -32,17 +27,28 @@ class ExpenseRepo extends GetxController {
     }
   }
 
-  //==================
-  // Read all expenses
-  //==================
-  Future<List<ExpenseModel>> getAllExpenses() async {
+  // ==================
+  // Read expenses of a given month and year
+  // ==================
+  Future<List<ExpenseModel>> fetchExpensesByMonth({
+    required int year,
+    required int month,
+  }) async {
     try {
       final db = await _dbHelper.database;
-      final result = await db.query('expenses');
-      debugPrint('Fetched ${result.length} expenses');
-      return result.map((e) => ExpenseModel.fromJson(e)).toList();
-    } catch (e) {
-      debugPrint('Error fetching expenses: $e');
+
+      final yearStr = year.toString();
+      final monthStr = month.toString().padLeft(2, '0'); // e.g. "09"
+
+      final result = await db.query(
+        'expenses',
+        where: "strftime('%Y', date) = ? AND strftime('%m', date) = ?",
+        whereArgs: [yearStr, monthStr],
+      );
+
+      return result.map((row) => ExpenseModel.fromJson(row)).toList();
+    } catch (error) {
+      debugPrint('[expense_repo]: Error fetching expenses: $error');
       return [];
     }
   }

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/budget_controller.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/expense_controller.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_expense_tracker/core/widgets/home_drawer.dart';
@@ -36,10 +37,16 @@ class _MainScaffoldState extends State<MainScaffold> {
     // Get current local year & month
     final now = DateTime.now();
     final currentYear = now.year;
-    final currentMonth = now.month - 1;
+    final currentMonth = now.month;
 
     //Fetch budget of the month.
     await Get.find<BudgetController>().getBudgetByMonth(
+      year: currentYear,
+      month: currentMonth,
+    );
+
+    // Fetch current month's expenses
+    await Get.find<ExpenseController>().getExpensesByMonth(
       year: currentYear,
       month: currentMonth,
     );
