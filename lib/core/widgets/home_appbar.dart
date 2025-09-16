@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
+import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
 
 class HomeAppbar extends StatelessWidget {
@@ -27,6 +28,8 @@ class HomeAppbar extends StatelessWidget {
             onTap: onMenuTap,
             child: Icon(Icons.menu, size: 30, color: theme.primary),
           ),
+
+          Text(style: TextUtils.title1Bold(context: context), 'This month'),
         ],
       ),
     );

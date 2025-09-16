@@ -22,7 +22,7 @@ class ExpanseCard extends StatelessWidget {
     final theme = CustomTheme.of(context);
     return Container(
       margin: EdgeInsets.only(bottom: 15),
-      height: isStats ? 80 : 100,
+      height: isStats ? 70 : 80,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: theme.cardColor,
@@ -46,7 +46,7 @@ class ExpanseCard extends StatelessWidget {
                 style: TextUtils.title1Bold(
                   context: context,
                   color: theme.grey1,
-                ).copyWith(fontSize: 35),
+                ).copyWith(fontSize: 30),
               ),
             ),
           ),
@@ -80,7 +80,7 @@ class ExpanseCard extends StatelessWidget {
                       //===============================================
                       Text(
                         '\$$amount',
-                        style: TextUtils.title3(context: context, color: theme.primary),
+                        style: TextUtils.b1Regular(context: context),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -93,7 +93,7 @@ class ExpanseCard extends StatelessWidget {
                 //===============================================
                 if (!isStats)
                   PopupMenuButton<String>(
-                    icon: Icon(Icons.more_vert, size: 20, color: Colors.white),
+                    icon: Icon(Icons.more_vert, size: 18, color: Colors.white),
                     onSelected: (value) {
                       switch (value) {
                         case 'delete':
@@ -107,7 +107,7 @@ class ExpanseCard extends StatelessWidget {
                             Icon(
                               Icons.delete_outline_outlined,
                               color: Colors.red,
-                              size: 20,
+                              size: 18,
                             ),
                             gapW(10),
                             Text('Delete'),

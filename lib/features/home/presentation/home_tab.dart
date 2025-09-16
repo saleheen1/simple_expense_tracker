@@ -29,11 +29,11 @@ class HomeTab extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 gapH(15),
-                Text(
-                  style: TextUtils.title1Bold(context: context),
-                  'This month',
-                ),
-                gapH(40),
+                // Text(
+                //   style: TextUtils.title1Bold(context: context),
+                //   'This month',
+                // ),
+                // gapH(30),
 
                 //=============================
                 //Total expanse and budget
@@ -58,7 +58,7 @@ class HomeTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                gapH(40),
+                gapH(20),
 
                 //=========================
                 //Expanses list
