@@ -22,12 +22,13 @@ class HomeAppbar extends StatelessWidget {
       ),
       decoration: BoxDecoration(color: theme.bgColor, borderRadius: radius(3)),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           InkWell(
             onTap: onMenuTap,
             child: Icon(Icons.menu, size: 30, color: theme.primary),
           ),
+
+          gapW(20),
 
           Text(style: TextUtils.title1Bold(context: context), 'This month'),
         ],
