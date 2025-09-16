@@ -10,15 +10,22 @@ class BudgetRepo extends GetxController {
   //===============
   // Create budget
   //===============
-  Future<void> createBudget(BudgetModel budget) async {
+  Future<void> createBudget({
+    required int year,
+    required int month,
+    required double budget,
+  }) async {
+    
     try {
       final db = await _dbHelper.database;
       await db.insert('budgets', {
-        'year': budget.year,
-        'month': budget.month,
-        'budget': budget.budget,
+        'year': year,
+        'month': month,
+        'budget': budget,
       }, conflictAlgorithm: ConflictAlgorithm.replace);
-      debugPrint('Budget inserted: ${budget.year}-${budget.month}');
+      debugPrint(
+        '[budget_repo] Budget: $budget inserted, year: $year, and month: month',
+      );
     } catch (e) {
       debugPrint('Error inserting budget: $e');
     }

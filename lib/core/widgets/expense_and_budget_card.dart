@@ -20,7 +20,7 @@ class ExpenseAndBudgetCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        if (isBudgetCard) Get.to(AddBudgetPage());
+        if (isBudgetCard) Get.to(() => AddBudgetPage());
       },
       child: Container(
         padding: EdgeInsets.only(top: 15, bottom: 15, left: 20),
@@ -36,7 +36,12 @@ class ExpenseAndBudgetCard extends StatelessWidget {
               isBudgetCard ? 'Budget' : 'Total expense',
             ),
             gapH(10),
-            Text(style: TextUtils.title1Bold(context: context), '\$$amount'),
+            Text(
+              style: TextUtils.title1Bold(context: context),
+              '\$$amount',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ],
         ),
       ),

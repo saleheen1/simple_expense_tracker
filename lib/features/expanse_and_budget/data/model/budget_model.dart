@@ -7,9 +7,9 @@ class BudgetModel {
 
   factory BudgetModel.fromJson(Map<String, dynamic> json) {
     return BudgetModel(
-      year: json['name'] ?? 0000,
-      month: json['date'] ?? 00,
-      budget: json['cost'] ?? 0,
+      year: json['year'] ?? 0000,
+      month: json['month'] ?? 00,
+      budget: json['budget'] ?? 0,
     );
   }
 }
