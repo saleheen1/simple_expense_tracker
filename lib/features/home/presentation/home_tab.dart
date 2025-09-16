@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
 import 'package:simple_expense_tracker/core/widgets/default_margin_widget.dart';
-import 'package:simple_expense_tracker/core/widgets/expanse_and_budget_card.dart';
-import 'package:simple_expense_tracker/core/widgets/expanse_card.dart';
+import 'package:simple_expense_tracker/core/widgets/expense_and_budget_card.dart';
+import 'package:simple_expense_tracker/core/widgets/expense_card.dart';
 import 'package:simple_expense_tracker/core/widgets/home_appbar.dart';
 
 class HomeTab extends StatelessWidget {
@@ -44,14 +44,14 @@ class HomeTab extends StatelessWidget {
                     //=============================
                     //Total expanse
                     //=============================
-                    Expanded(child: ExpanseAndBudgetCard(amount: totalExpanse)),
+                    Expanded(child: ExpenseAndBudgetCard(amount: totalExpanse)),
                     gapW(20),
 
                     //=============================
                     //Budget
                     //=============================
                     Expanded(
-                      child: ExpanseAndBudgetCard(
+                      child: ExpenseAndBudgetCard(
                         isBudgetCard: true,
                         amount: budget,
                       ),

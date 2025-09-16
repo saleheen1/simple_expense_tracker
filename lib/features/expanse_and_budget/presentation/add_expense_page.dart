@@ -5,13 +5,13 @@ import 'package:simple_expense_tracker/core/widgets/button_primary.dart';
 import 'package:simple_expense_tracker/core/widgets/custom_input.dart';
 import 'package:simple_expense_tracker/core/widgets/default_margin_widget.dart';
 
-class AddExpansePage extends StatelessWidget {
-  const AddExpansePage({super.key});
+class AddExpensePage extends StatelessWidget {
+  const AddExpensePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbarCommon('Add expanse', context),
+      appBar: appbarCommon('Add expense', context),
       body: DefaultMarginWidget(
         child: Column(
           children: [

@@ -5,10 +5,10 @@ import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/presentation/add_budget_page.dart';
 
-class ExpanseAndBudgetCard extends StatelessWidget {
+class ExpenseAndBudgetCard extends StatelessWidget {
   final String amount;
   final bool isBudgetCard;
-  const ExpanseAndBudgetCard({
+  const ExpenseAndBudgetCard({
     super.key,
     required this.amount,
     this.isBudgetCard = false,
@@ -33,7 +33,7 @@ class ExpanseAndBudgetCard extends StatelessWidget {
           children: [
             Text(
               style: TextUtils.title3(context: context),
-              isBudgetCard ? 'Budget' : 'Total expanse',
+              isBudgetCard ? 'Budget' : 'Total expense',
             ),
             gapH(10),
             Text(style: TextUtils.title1Bold(context: context), '\$$amount'),

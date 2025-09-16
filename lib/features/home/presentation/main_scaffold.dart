@@ -9,7 +9,7 @@ import 'package:simple_expense_tracker/core/utils/custom_fab_location.dart';
 import 'package:simple_expense_tracker/features/home/presentation/home_tab.dart';
 import 'package:simple_expense_tracker/features/home/presentation/widgets/bottom_menu.dart';
 import 'package:simple_expense_tracker/features/home/data/controller/navigation_controller.dart';
-import 'package:simple_expense_tracker/features/expanse_and_budget/presentation/add_expanse_page.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/presentation/add_expense_page.dart';
 
 class MainScaffold extends StatefulWidget {
   const MainScaffold({super.key});
@@ -73,7 +73,7 @@ class _MainScaffoldState extends State<MainScaffold> {
             ),
             child: GestureDetector(
               onTap: () {
-                Get.to(AddExpansePage());
+                Get.to(AddExpensePage());
               },
               child: Icon(Icons.add_rounded, color: theme.bgColor, size: 40),
             ),

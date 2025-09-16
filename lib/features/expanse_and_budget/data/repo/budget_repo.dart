@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:simple_expense_tracker/core/database/database_helper.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/budget_model.dart';
 import 'package:sqflite/sqflite.dart';
 
-class BudgetRepo {
+class BudgetRepo extends GetxController {
   final DatabaseHelper _dbHelper = DatabaseHelper();
-
 
   //===============
   // Create budget
@@ -13,15 +13,11 @@ class BudgetRepo {
   Future<void> createBudget(BudgetModel budget) async {
     try {
       final db = await _dbHelper.database;
-      await db.insert(
-        'budgets',
-        {
-          'year': budget.year,
-          'month': budget.month,
-          'budget': budget.budget,
-        },
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
+      await db.insert('budgets', {
+        'year': budget.year,
+        'month': budget.month,
+        'budget': budget.budget,
+      }, conflictAlgorithm: ConflictAlgorithm.replace);
       debugPrint('Budget inserted: ${budget.year}-${budget.month}');
     } catch (e) {
       debugPrint('Error inserting budget: $e');

@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:get/state_manager.dart';
 import 'package:simple_expense_tracker/core/database/database_helper.dart';
-import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/expanse_model.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/expense_model.dart';
 import 'package:sqflite/sqflite.dart';
 
-class ExpenseRepo {
+class ExpenseRepo extends GetxController{
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
   //===============

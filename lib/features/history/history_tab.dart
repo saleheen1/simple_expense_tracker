@@ -4,8 +4,8 @@ import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
 import 'package:simple_expense_tracker/core/widgets/day_card.dart';
 import 'package:simple_expense_tracker/core/widgets/default_margin_widget.dart';
-import 'package:simple_expense_tracker/core/widgets/expanse_and_budget_card.dart';
-import 'package:simple_expense_tracker/core/widgets/expanse_card.dart';
+import 'package:simple_expense_tracker/core/widgets/expense_and_budget_card.dart';
+import 'package:simple_expense_tracker/core/widgets/expense_card.dart';
 import 'package:simple_expense_tracker/core/widgets/month_card.dart';
 import 'package:simple_expense_tracker/core/widgets/notification_bar.dart';
 
@@ -94,7 +94,7 @@ class HistoryTab extends StatelessWidget {
                 //Total expanse
                 //=============================
                 Expanded(
-                  child: ExpanseAndBudgetCard(
+                  child: ExpenseAndBudgetCard(
                     amount: totalExpanse,
                   ),
                 ),
@@ -104,7 +104,7 @@ class HistoryTab extends StatelessWidget {
                 //Budget
                 //=============================
                 Expanded(
-                  child: ExpanseAndBudgetCard(
+                  child: ExpenseAndBudgetCard(
                     isBudgetCard: true,
                     amount: budget,
                   ),
