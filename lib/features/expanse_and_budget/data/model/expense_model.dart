@@ -1,6 +1,6 @@
 class ExpenseModel {
   final String date;
-  final String name;
+  final String name; // the name is the description field actually.
   final double cost;
 
   ExpenseModel({required this.date, required this.name, required this.cost});
@@ -9,7 +9,11 @@ class ExpenseModel {
     return ExpenseModel(
       name: json['name'] ?? '',
       date: json['date'] ?? '',
-      cost: json['cost'] ?? 0,
+      cost: (json['cost'] as num?)?.toDouble() ?? 0.0,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'name': name, 'date': date, 'cost': cost,};
   }
 }

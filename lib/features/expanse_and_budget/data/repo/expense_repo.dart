@@ -4,27 +4,31 @@ import 'package:simple_expense_tracker/core/database/database_helper.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/expense_model.dart';
 import 'package:sqflite/sqflite.dart';
 
-class ExpenseRepo extends GetxController{
+class ExpenseRepo extends GetxController {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
   //===============
-  // Create expense
+  // Insert expense
   //===============
-  Future<void> createExpense(ExpenseModel expense) async {
+  Future<bool> upsertExpense(ExpenseModel expense) async {
     try {
       final db = await _dbHelper.database;
+
       await db.insert(
         'expenses',
-        {
-          'date': expense.date,
-          'name': expense.name,
-          'cost': expense.cost,
-        },
+        // {
+        //   'date': expense.date,
+        //   'name': expense.name,
+        //   'cost': expense.cost,
+        // },
+        expense.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
-      debugPrint('Expense inserted: ${expense.name}');
-    } catch (e) {
-      debugPrint('Error inserting expense: $e');
+
+      return true;
+    } catch (error) {
+      debugPrint('[expense_repo]: Error inserting expense: $error');
+      return false;
     }
   }
 

@@ -4,6 +4,7 @@ import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
 import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/presentation/add_budget_page.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/presentation/add_expense_page.dart';
 
 class ExpenseAndBudgetCard extends StatelessWidget {
   final String amount;
@@ -20,7 +21,11 @@ class ExpenseAndBudgetCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        if (isBudgetCard) Get.to(() => AddBudgetPage());
+        if (isBudgetCard) {
+          Get.to(() => AddBudgetPage());
+        } else {
+          Get.to(() => AddExpensePage());
+        }
       },
       child: Container(
         padding: EdgeInsets.only(top: 15, bottom: 15, left: 20),

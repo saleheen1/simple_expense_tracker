@@ -8,15 +8,15 @@ class BudgetRepo extends GetxController {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
   //===============
-  // Create budget
+  // Insert budget
   //===============
-  Future<bool> createBudget(BudgetModel budgetModel) async {
+  Future<bool> upsertBudget(BudgetModel budget) async {
   try {
     final db = await _dbHelper.database;
 
     await db.insert(
       'budgets',
-      budgetModel.toJson(),
+      budget.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 

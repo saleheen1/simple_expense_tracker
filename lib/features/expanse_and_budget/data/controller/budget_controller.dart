@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simple_expense_tracker/core/utils/snackbars.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/budget_model.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/repo/budget_repo.dart';
 
@@ -27,7 +28,7 @@ class BudgetController extends GetxController {
     'December',
   ];
   final years = ['2025', '2026'];
-  final budgetInputController = TextEditingController();
+  final amountController = TextEditingController();
 
   String selectedMonth = 'January';
   String selectedYear = '2025';
@@ -43,17 +44,20 @@ class BudgetController extends GetxController {
   }
 
   bool filterBasicDetails() {
-    if (budgetInputController.text.isEmpty) {
+    if (amountController.text.isEmpty) {
       showErrorSnackbar('Error', 'Please fill all the required fields');
       return false;
     }
-    if (double.tryParse(budgetInputController.text) == null) {
+    if (double.tryParse(amountController.text) == null) {
       showErrorSnackbar('Error', 'Please enter valid budget amount');
       return false;
     }
     return true;
   }
 
+  //=============
+  // Add Budget
+  //=============
   Future<bool> addBudget() async {
     if (!filterBasicDetails()) return false;
     setLoading(true);
@@ -64,10 +68,10 @@ class BudgetController extends GetxController {
     final budget = BudgetModel(
       year: int.parse(selectedYear),
       month: months.indexOf(selectedMonth),
-      budget: double.parse(budgetInputController.text),
+      budget: double.parse(amountController.text),
     );
 
-    final success = await budgetRepo.createBudget(budget);
+    final success = await budgetRepo.upsertBudget(budget);
 
     if (success) {
       debugPrint('[budget_controller.dart] Budget added: ${budget.toJson()}');
@@ -85,6 +89,4 @@ class BudgetController extends GetxController {
     debugPrint('Controller: ${budgets.length} budgets fetched');
     return budgets;
   }
-
-  void showErrorSnackbar(String s, String t) {}
 }

@@ -15,11 +15,12 @@ class AddBudgetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appbarCommon('Add budget', context),
-      body: GestureDetector(
-        onTap: () => hideKeyboard(context),
-        child: DefaultMarginWidget(
+    return GestureDetector(
+      onTap: () => hideKeyboard(context),
+      child: Scaffold(
+        appBar: appbarCommon('Add budget', context),
+
+        body: DefaultMarginWidget(
           child: GetBuilder<BudgetController>(
             builder: (bc) {
               return LoaderWidget(
@@ -62,7 +63,7 @@ class AddBudgetPage extends StatelessWidget {
                     //Budget
                     //===================
                     CustomInput(
-                      controller: bc.budgetInputController,
+                      controller: bc.amountController,
                       labelText: 'Budget',
                       hintText: 'Enter budget',
                     ),
