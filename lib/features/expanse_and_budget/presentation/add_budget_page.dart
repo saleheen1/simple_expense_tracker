@@ -71,7 +71,6 @@ class AddBudgetPage extends StatelessWidget {
                     ButtonPrimary(
                       text: 'Save',
                       onPressed: () {
-                        debugPrint('wait!');
                         bc.addBudget();
                       },
                     ),

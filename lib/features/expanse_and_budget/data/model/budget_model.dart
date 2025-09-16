@@ -3,13 +3,25 @@ class BudgetModel {
   final int month;
   final double budget;
 
-  BudgetModel({required this.year, required this.month, required this.budget});
+  BudgetModel({
+    required this.year,
+    required this.month,
+    required this.budget,
+  });
 
   factory BudgetModel.fromJson(Map<String, dynamic> json) {
     return BudgetModel(
-      year: json['year'] ?? 0000,
-      month: json['month'] ?? 00,
-      budget: json['budget'] ?? 0,
+      year: json['year'] as int? ?? 0,
+      month: json['month'] as int? ?? 0,
+      budget: (json['budget'] as num?)?.toDouble() ?? 0.0,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'year': year,
+      'month': month,
+      'budget': budget,
+    };
   }
 }

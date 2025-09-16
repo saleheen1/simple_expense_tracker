@@ -54,9 +54,6 @@ class BudgetController extends GetxController {
     return true;
   }
 
-  //=============
-  // Add budget
-  //=============
   Future<bool> addBudget() async {
     if (!filterBasicDetails()) return false;
     setLoading(true);
@@ -64,18 +61,20 @@ class BudgetController extends GetxController {
     // artificial delay for loader widget to show up.(inproved UX)
     await Future.delayed(const Duration(seconds: 1));
 
-    await budgetRepo.createBudget(
-      month: months.indexOf(selectedMonth),
+    final budget = BudgetModel(
       year: int.parse(selectedYear),
+      month: months.indexOf(selectedMonth),
       budget: double.parse(budgetInputController.text),
     );
 
-    debugPrint(
-      '[budget_controller.dart] Budget added, month number: ${months.indexOf(selectedMonth)}, year: ${int.parse(selectedYear)}, budget: ${double.parse(budgetInputController.text)}',
-    );
+    final success = await budgetRepo.createBudget(budget);
+
+    if (success) {
+      debugPrint('[budget_controller.dart] Budget added: ${budget.toJson()}');
+    }
 
     setLoading(false);
-    return true;
+    return success;
   }
 
   //=============
