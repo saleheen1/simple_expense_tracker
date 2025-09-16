@@ -74,6 +74,11 @@ class BudgetController extends GetxController {
     final success = await budgetRepo.upsertBudget(budget);
 
     if (success) {
+      // Get current local year & month
+      final now = DateTime.now();
+      final currentYear = now.year;
+      final currentMonth = now.month - 1;
+      getBudgetByMonth(year: currentYear, month: currentMonth);
       debugPrint('[budget_controller.dart] Budget added: ${budget.toJson()}');
     }
 
@@ -81,12 +86,23 @@ class BudgetController extends GetxController {
     return success;
   }
 
-  //=============
-  // Fetch Budgets
-  //=============
-  Future<List<BudgetModel>> fetchBudgets() async {
-    final budgets = await budgetRepo.getAllBudgets();
-    debugPrint('Controller: ${budgets.length} budgets fetched');
-    return budgets;
+  //================
+  // Get Budget of a given month, and year
+  //================
+  double budgetOfCurrentMonth = 0;
+
+  Future<void> getBudgetByMonth({required int year, required int month}) async {
+    final double fetchedBudget = await budgetRepo.fetchMonthBudget(
+      year: year,
+      month: month,
+    );
+
+    budgetOfCurrentMonth = fetchedBudget;
+
+    debugPrint(
+      '[budget_controller.dart] Budget of $month/$year: $budgetOfCurrentMonth',
+    );
+
+    update();
   }
 }

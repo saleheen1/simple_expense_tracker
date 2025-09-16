@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:path/path.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/budget_controller.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_expense_tracker/core/widgets/home_drawer.dart';
@@ -31,6 +32,17 @@ class _MainScaffoldState extends State<MainScaffold> {
     debugPrint(
       '[main_scaffold.dart]📍 DB 🗂️ for this project located at(applicable for simulators\' only): $dbPath',
     );
+
+    // Get current local year & month
+    final now = DateTime.now();
+    final currentYear = now.year;
+    final currentMonth = now.month - 1;
+
+    //Fetch budget of the month.
+    await Get.find<BudgetController>().getBudgetByMonth(
+      year: currentYear,
+      month: currentMonth,
+    );
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -42,7 +54,7 @@ class _MainScaffoldState extends State<MainScaffold> {
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [
-      HomeTab(onMenuTap: _openDrawer, totalExpanse: '731', budget: '1000'),
+      HomeTab(onMenuTap: _openDrawer),
       HistoryTab(totalExpanse: '731', budget: '1000'),
     ];
     final theme = CustomTheme.of(context);
