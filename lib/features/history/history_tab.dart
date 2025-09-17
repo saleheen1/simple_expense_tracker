@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
 import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
@@ -8,6 +9,7 @@ import 'package:simple_expense_tracker/core/widgets/expense_and_budget_card.dart
 import 'package:simple_expense_tracker/core/widgets/expense_card.dart';
 import 'package:simple_expense_tracker/core/widgets/month_card.dart';
 import 'package:simple_expense_tracker/core/widgets/notification_bar.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/budget_controller.dart';
 
 class HistoryTab extends StatelessWidget {
   final String totalExpanse;
@@ -24,114 +26,122 @@ class HistoryTab extends StatelessWidget {
 
     return Scaffold(
       body: DefaultMarginWidget(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            NotificationBar(),
-
-            //=====================
-            //Months
-            //=====================
-            Row(
+        child: GetBuilder<BudgetController>(
+          builder: (bc) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 35,
-                    child: ListView.builder(
-                      itemCount: 5,
-                      shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return MonthCard(isSelected: selectedIndex == index);
-                      },
+                NotificationBar(),
+
+                //=====================
+                //Months
+                //=====================
+                Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 35,
+                        child: ListView.builder(
+                          itemCount: bc.months.length,
+                          shrinkWrap: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return MonthCard(
+                              monthName: bc.months[index],
+                              isSelected: bc.selectedMonthIndex == index,
+                              onTap: () => bc.selectMonthInHistory(index),
+                            );
+                          },
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-            gapH(20),
+                gapH(20),
 
-            //=====================
-            //Days
-            //=====================
-            Row(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 75,
-                    child: ListView.builder(
-                      itemCount: 10,
-                      shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          return _allButton(context, selectedIndex == 0);
-                        } else {
-                          return DayCard(
-                            isSelected: false,
-                            date: '11',
-                            monthName: 'Feb',
-                            weekdayName: 'Sat',
-                          );
-                        }
-                      },
+                //=====================
+                //Days
+                //=====================
+                Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 75,
+                        child: ListView.builder(
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return _allButton(context, selectedIndex == 0);
+                            } else {
+                              return DayCard(
+                                isSelected: false,
+                                date: '11',
+                                monthName: 'Feb',
+                                weekdayName: 'Sat',
+                              );
+                            }
+                          },
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-            gapH(30),
-
-            //=============================
-            //Total expanse and budget
-            //=============================
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //=============================
-                //Total expanse
-                //=============================
-                Expanded(child: ExpenseAndBudgetCard(amount: totalExpanse)),
-                gapW(20),
+                gapH(30),
 
                 //=============================
-                //Budget
+                //Total expanse and budget
                 //=============================
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    //=============================
+                    //Total expanse
+                    //=============================
+                    Expanded(child: ExpenseAndBudgetCard(amount: totalExpanse)),
+                    gapW(20),
+
+                    //=============================
+                    //Budget
+                    //=============================
+                    Expanded(
+                      child: ExpenseAndBudgetCard(
+                        isBudgetCard: true,
+                        amount: budget,
+                      ),
+                    ),
+                  ],
+                ),
+                gapH(20),
+
+                //=========================
+                //Expanses list
+                //=========================
+                Text(style: TextUtils.title3(context: context), 'Expanse list'),
+                gapH(20),
+
                 Expanded(
-                  child: ExpenseAndBudgetCard(
-                    isBudgetCard: true,
-                    amount: budget,
+                  child: ListView.builder(
+                    itemCount: 3,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ExpanseCard(
+                        index: index,
+                        title: 'Fruits and shopping',
+                        amount: '689',
+                        isStats: true,
+                      );
+                    },
                   ),
                 ),
               ],
-            ),
-            gapH(20),
-
-            //=========================
-            //Expanses list
-            //=========================
-            Text(style: TextUtils.title3(context: context), 'Expanse list'),
-            gapH(20),
-
-            Expanded(
-              child: ListView.builder(
-                itemCount: 3,
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return ExpanseCard(
-                    index: index,
-                    title: 'Fruits and shopping',
-                    amount: '689',
-                    isStats: true,
-                  );
-                },
-              ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

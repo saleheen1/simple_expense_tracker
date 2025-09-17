@@ -32,6 +32,7 @@ class BudgetController extends GetxController {
 
   String selectedMonth = 'January';
   String selectedYear = '2025';
+  int selectedMonthIndex = 0; // Add selected month index for history tab
 
   void updateMonth(String month) {
     selectedMonth = month;
@@ -42,6 +43,21 @@ class BudgetController extends GetxController {
     selectedYear = year;
     update();
   }
+
+  // Add method to handle month selection in history tab
+  void selectMonthInHistory(int monthIndex) {
+    selectedMonthIndex = monthIndex;
+    update();
+
+    // TODO: Fetch data for the selected month
+    // Add logic here to fetch budget data for the selected month
+    debugPrint(
+      '[budget_controller.dart] Selected month: ${months[monthIndex]}',
+    );
+  }
+  // Get currently selected month name for history tab
+  String get selectedHistoryMonthName => months[selectedMonthIndex];
+  
 
   bool filterBasicDetails() {
     if (amountController.text.isEmpty) {
