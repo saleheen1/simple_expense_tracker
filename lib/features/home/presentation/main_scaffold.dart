@@ -43,13 +43,16 @@ class _MainScaffoldState extends State<MainScaffold> {
     await Get.find<BudgetController>().getBudgetOfGivenMonth(
       year: currentYear,
       month: currentMonth,
-      currentMonth: true
+      isCurrentMonth: true
     );
 
+    await Get.find<BudgetController>().selectMonthInHistory(currentMonth - 1);
+
     // Fetch current month's expenses
-    await Get.find<ExpenseController>().getExpensesByMonth(
+    await Get.find<ExpenseController>().getExpensesByGivenMonth(
       year: currentYear,
       month: currentMonth,
+      isCurrentMonth: true
     );
   }
 

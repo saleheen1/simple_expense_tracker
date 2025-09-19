@@ -8,11 +8,11 @@ import 'package:simple_expense_tracker/features/home/data/controller/navigation_
 Future<void> initBindings() async {
   Get.put(NavigationController());
 
-  //Budget
-  Get.put(BudgetRepo());
-  Get.put(BudgetController());
-
   //Expense
   Get.put(ExpenseRepo());
   Get.put(ExpenseController());
+
+  //Budget
+  Get.put(BudgetRepo());
+  Get.put(BudgetController());
 }

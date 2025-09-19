@@ -58,7 +58,7 @@ class ExpenseController extends GetxController {
       final now = DateTime.now();
       final currentYear = now.year;
       final currentMonth = now.month;
-      getExpensesByMonth(year: currentYear, month: currentMonth);
+      getExpensesByGivenMonth(year: currentYear, month: currentMonth, isCurrentMonth: true);
       debugPrint(
         '[expense_controller.dart] Expense added: ${expense.toJson()}',
       );
@@ -73,27 +73,42 @@ class ExpenseController extends GetxController {
   // Fetch expenses
   //================
   List<ExpenseModel> expensesOfGivenMonth = [];
-  double totalExpenseOfMonth = 0;
+  List<ExpenseModel> expensesOfCurrentMonth = [];
+  double totalExpenseOfGivenMonth = 0;
+  double totalExpenseOfCurrentMonth = 0;
 
-  Future<void> getExpensesByMonth({
+  Future<void> getExpensesByGivenMonth({
     required int year,
     required int month,
+    required bool isCurrentMonth,
   }) async {
-    
     final fetchedExpenses = await expenseRepo.fetchExpensesByMonth(
       year: year,
       month: month,
     );
-    expensesOfGivenMonth = fetchedExpenses;
+
+    if (!isCurrentMonth) expensesOfGivenMonth = fetchedExpenses;
+    if (isCurrentMonth) expensesOfCurrentMonth = fetchedExpenses;
 
     double totalExpenses = 0.0;
     for (var e in fetchedExpenses) {
       totalExpenses += e.cost;
     }
-    totalExpenseOfMonth = double.parse(totalExpenses.toStringAsFixed(2));
+
+    if (!isCurrentMonth) {
+      totalExpenseOfGivenMonth = double.parse(
+        totalExpenses.toStringAsFixed(2),
+      );
+    }
+    if (isCurrentMonth) {
+      totalExpenseOfCurrentMonth = double.parse(
+        totalExpenses.toStringAsFixed(2),
+      );
+    }
+
 
     debugPrint(
-      '[expense_controller]: total expense of the month: $totalExpenseOfMonth, '
+      '[expense_controller]: total expense of the month given month: $totalExpenseOfGivenMonth, '
       'and expenses details: ${fetchedExpenses.map((e) => e.toJson()).toList()}',
     );
 

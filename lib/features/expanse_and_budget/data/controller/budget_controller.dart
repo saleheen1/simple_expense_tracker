@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_expense_tracker/core/utils/snackbars.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/expense_controller.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/budget_model.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/repo/budget_repo.dart';
 
 class BudgetController extends GetxController {
+  final expenseController = Get.find<ExpenseController>();
   final budgetRepo = Get.find<BudgetRepo>();
 
   bool isLoading = false;
@@ -60,22 +62,23 @@ class BudgetController extends GetxController {
   }
 
   // Add method to handle month selection in history tab
-  void selectMonthInHistory(int monthIndex) {
+  Future<void> selectMonthInHistory(int monthIndex) async {
     selectedMonthIndex = monthIndex;
 
-    // Get current local year & month
     final now = DateTime.now();
     final currentYear = now.year;
 
     getBudgetOfGivenMonth(
       year: currentYear,
       month: monthIndex + 1,
-      currentMonth: false,
+      isCurrentMonth: false,
+    );
+    expenseController.getExpensesByGivenMonth(
+      year: currentYear,
+      month: monthIndex + 1,
+      isCurrentMonth: false,
     );
     update();
-
-    // TODO: Fetch data for the selected month
-    // Add logic here to fetch budget data for the selected month
     debugPrint(
       '[budget_controller.dart] Selected month: ${months[monthIndex]}',
     );
@@ -122,7 +125,7 @@ class BudgetController extends GetxController {
       getBudgetOfGivenMonth(
         year: currentYear,
         month: currentMonth,
-        currentMonth: true,
+        isCurrentMonth: true,
       );
       debugPrint('[budget_controller.dart] Budget added: ${budget.toJson()}');
     }
@@ -141,15 +144,15 @@ class BudgetController extends GetxController {
   Future<void> getBudgetOfGivenMonth({
     required int year,
     required int month,
-    required bool currentMonth,
+    required bool isCurrentMonth,
   }) async {
     final double fetchedBudget = await budgetRepo.fetchMonthBudget(
       year: year,
       month: month - 1,
     );
 
-    if (currentMonth) budgetOfCurrentMonth = fetchedBudget;
-    if (!currentMonth) budgetOfGivenMonth = fetchedBudget;
+    if (!isCurrentMonth) budgetOfGivenMonth = fetchedBudget;
+    if (isCurrentMonth) budgetOfCurrentMonth = fetchedBudget;
 
     debugPrint(
       '[budget_controller.dart] Budget of given date $month/$year: $budgetOfGivenMonth',

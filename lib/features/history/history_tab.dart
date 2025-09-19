@@ -10,6 +10,7 @@ import 'package:simple_expense_tracker/core/widgets/expense_card.dart';
 import 'package:simple_expense_tracker/core/widgets/month_card.dart';
 import 'package:simple_expense_tracker/core/widgets/notification_bar.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/budget_controller.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/expense_controller.dart';
 
 class HistoryTab extends StatelessWidget {
   final String totalExpanse;
@@ -26,115 +27,132 @@ class HistoryTab extends StatelessWidget {
       body: DefaultMarginWidget(
         child: GetBuilder<BudgetController>(
           builder: (bc) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                NotificationBar(),
-
-                //=====================
-                //Months
-                //=====================
-                Row(
+            return GetBuilder<ExpenseController>(
+              builder: (ec) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: 35,
-                        child: ListView.builder(
-                          itemCount: bc.months.length,
-                          shrinkWrap: true,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return MonthCard(
-                              monthName: bc.months[index],
-                              isSelected: bc.selectedMonthIndex == index,
-                              onTap: () => bc.selectMonthInHistory(index),
-                            );
-                          },
+                    NotificationBar(),
+
+                    //=====================
+                    //Months
+                    //=====================
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                            height: 35,
+                            child: ListView.builder(
+                              itemCount: bc.months.length,
+                              shrinkWrap: true,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return MonthCard(
+                                  monthName: bc.months[index],
+                                  isSelected: bc.selectedMonthIndex == index,
+                                  onTap: () => bc.selectMonthInHistory(index),
+                                );
+                              },
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-                gapH(20),
+                    gapH(20),
 
-                //=====================
-                //Days
-                //=====================
-                Row(
-                  children: [
-                    _allButton(context, true),
-                    Expanded(
-                      child: SizedBox(
-                        height: 75,
-                        child: ListView.builder(
-                          itemCount: bc.getWeekdaysOfSelectedMonth(monthIndex: bc.selectedMonthIndex).length,
-                          shrinkWrap: true,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return DayCard(
-                              isSelected: false,
-                              date: (index + 1).toString(),
-                              monthName: bc.months[bc.selectedMonthIndex],
-                              weekdayName: bc.getWeekdaysOfSelectedMonth(monthIndex: bc.selectedMonthIndex)[index],
-                            );
-                          },
+                    //=====================
+                    //Days
+                    //=====================
+                    Row(
+                      children: [
+                        _allButton(context, true),
+                        Expanded(
+                          child: SizedBox(
+                            height: 75,
+                            child: ListView.builder(
+                              itemCount: bc
+                                  .getWeekdaysOfSelectedMonth(
+                                    monthIndex: bc.selectedMonthIndex,
+                                  )
+                                  .length,
+                              shrinkWrap: true,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return DayCard(
+                                  isSelected: false,
+                                  date: (index + 1).toString(),
+                                  monthName: bc.months[bc.selectedMonthIndex],
+                                  weekdayName: bc.getWeekdaysOfSelectedMonth(
+                                    monthIndex: bc.selectedMonthIndex,
+                                  )[index],
+                                );
+                              },
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-                gapH(30),
-
-                //=============================
-                //Total expanse and budget
-                //=============================
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //=============================
-                    //Total expanse
-                    //=============================
-                    Expanded(child: ExpenseAndBudgetCard(amount: totalExpanse)),
-                    gapW(20),
+                    gapH(30),
 
                     //=============================
-                    //Budget
+                    //Total expanse and budget
                     //=============================
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        //=============================
+                        //Total expanse
+                        //=============================
+                        Expanded(
+                          child: ExpenseAndBudgetCard(
+                            amount: '${ec.totalExpenseOfGivenMonth}',
+                          ),
+                        ),
+                        gapW(20),
+
+                        //=============================
+                        //Budget
+                        //=============================
+                        Expanded(
+                          child: ExpenseAndBudgetCard(
+                            isBudgetCard: true,
+                            amount: '${bc.budgetOfGivenMonth}',
+                          ),
+                        ),
+                      ],
+                    ),
+                    gapH(20),
+
+                    //=========================
+                    //Expanses list
+                    //=========================
+                    Text(
+                      style: TextUtils.title3(context: context),
+                      'Expanse list',
+                    ),
+                    gapH(20),
+
                     Expanded(
-                      child: ExpenseAndBudgetCard(
-                        isBudgetCard: true,
-                        amount: '${bc.budgetOfGivenMonth}'
+                      child: ListView.builder(
+                        itemCount: ec.expensesOfGivenMonth.length,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return ExpanseCard(
+                            index: index,
+                            title: ec.expensesOfGivenMonth[index].name,
+                            amount: ec.expensesOfGivenMonth[index].cost
+                                .toString(),
+                          );
+                        },
                       ),
                     ),
                   ],
-                ),
-                gapH(20),
-
-                //=========================
-                //Expanses list
-                //=========================
-                Text(style: TextUtils.title3(context: context), 'Expanse list'),
-                gapH(20),
-
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: 3,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return ExpanseCard(
-                        index: index,
-                        title: 'Fruits and shopping',
-                        amount: '689',
-                        isStats: true,
-                      );
-                    },
-                  ),
-                ),
-              ],
+                );
+              },
             );
           },
         ),

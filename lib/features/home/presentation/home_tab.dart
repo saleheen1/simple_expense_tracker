@@ -38,7 +38,7 @@ class HomeTab extends StatelessWidget {
                             //=============================
                             //Total expanse
                             //=============================
-                            Expanded(child: ExpenseAndBudgetCard(amount: '${ec.totalExpenseOfMonth}')),
+                            Expanded(child: ExpenseAndBudgetCard(amount: '${ec.totalExpenseOfCurrentMonth}')),
                             gapW(20),
                     
                             //=============================
@@ -62,15 +62,15 @@ class HomeTab extends StatelessWidget {
                     
                         Expanded(
                           child: ListView.builder(
-                            itemCount: ec.expensesOfGivenMonth.length,
+                            itemCount: ec.expensesOfCurrentMonth.length,
                             shrinkWrap: true,
                             padding: EdgeInsets.zero,
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return ExpanseCard(
                                 index: index,
-                                title: ec.expensesOfGivenMonth[index].name,
-                                amount: ec.expensesOfGivenMonth[index].cost.toString(),
+                                title: ec.expensesOfCurrentMonth[index].name,
+                                amount: ec.expensesOfCurrentMonth[index].cost.toString(),
                               );
                             },
                           ),
