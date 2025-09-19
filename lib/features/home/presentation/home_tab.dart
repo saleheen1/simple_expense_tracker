@@ -47,7 +47,7 @@ class HomeTab extends StatelessWidget {
                             Expanded(
                               child: ExpenseAndBudgetCard(
                                 isBudgetCard: true,
-                                amount: '${bc.budgetOfGivenMonth}',
+                                amount: '${bc.budgetOfCurrentMonth}',
                               ),
                             ),
                           ],

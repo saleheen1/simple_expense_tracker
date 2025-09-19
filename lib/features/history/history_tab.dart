@@ -22,8 +22,6 @@ class HistoryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int selectedIndex = 0;
-
     return Scaffold(
       body: DefaultMarginWidget(
         child: GetBuilder<BudgetController>(
@@ -65,25 +63,22 @@ class HistoryTab extends StatelessWidget {
                 //=====================
                 Row(
                   children: [
+                    _allButton(context, true),
                     Expanded(
                       child: SizedBox(
                         height: 75,
                         child: ListView.builder(
-                          itemCount: 10,
+                          itemCount: bc.getWeekdaysOfSelectedMonth(monthIndex: bc.selectedMonthIndex).length,
                           shrinkWrap: true,
                           physics: const AlwaysScrollableScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            if (index == 0) {
-                              return _allButton(context, selectedIndex == 0);
-                            } else {
-                              return DayCard(
-                                isSelected: false,
-                                date: '11',
-                                monthName: 'Feb',
-                                weekdayName: 'Sat',
-                              );
-                            }
+                            return DayCard(
+                              isSelected: false,
+                              date: (index + 1).toString(),
+                              monthName: bc.months[bc.selectedMonthIndex],
+                              weekdayName: bc.getWeekdaysOfSelectedMonth(monthIndex: bc.selectedMonthIndex)[index],
+                            );
                           },
                         ),
                       ),
@@ -110,7 +105,7 @@ class HistoryTab extends StatelessWidget {
                     Expanded(
                       child: ExpenseAndBudgetCard(
                         isBudgetCard: true,
-                        amount: budget,
+                        amount: '${bc.budgetOfGivenMonth}'
                       ),
                     ),
                   ],

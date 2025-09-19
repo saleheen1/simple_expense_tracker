@@ -40,9 +40,10 @@ class _MainScaffoldState extends State<MainScaffold> {
     final currentMonth = now.month;
 
     //Fetch budget of the month.
-    await Get.find<BudgetController>().getBudgetByMonth(
+    await Get.find<BudgetController>().getBudgetOfGivenMonth(
       year: currentYear,
       month: currentMonth,
+      currentMonth: true
     );
 
     // Fetch current month's expenses

@@ -27,6 +27,21 @@ class BudgetController extends GetxController {
     'November',
     'December',
   ];
+
+  List<String> getWeekdaysOfSelectedMonth({required int monthIndex}) {
+    const names = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+    final year = DateTime.now().year;
+    final daysInMonth = DateTime(year, monthIndex + 2, 0).day;
+
+    final weekdays = List.generate(daysInMonth, (i) {
+      final weekday = names[DateTime(year, monthIndex + 1, i + 1).weekday - 1];
+      return weekday;
+    });
+
+    return weekdays;
+  }
+
   final years = ['2025', '2026'];
   final amountController = TextEditingController();
 
@@ -47,6 +62,16 @@ class BudgetController extends GetxController {
   // Add method to handle month selection in history tab
   void selectMonthInHistory(int monthIndex) {
     selectedMonthIndex = monthIndex;
+
+    // Get current local year & month
+    final now = DateTime.now();
+    final currentYear = now.year;
+
+    getBudgetOfGivenMonth(
+      year: currentYear,
+      month: monthIndex + 1,
+      currentMonth: false,
+    );
     update();
 
     // TODO: Fetch data for the selected month
@@ -55,9 +80,9 @@ class BudgetController extends GetxController {
       '[budget_controller.dart] Selected month: ${months[monthIndex]}',
     );
   }
+
   // Get currently selected month name for history tab
   String get selectedHistoryMonthName => months[selectedMonthIndex];
-  
 
   bool filterBasicDetails() {
     if (amountController.text.isEmpty) {
@@ -94,7 +119,11 @@ class BudgetController extends GetxController {
       final now = DateTime.now();
       final currentYear = now.year;
       final currentMonth = now.month;
-      getBudgetByMonth(year: currentYear, month: currentMonth);
+      getBudgetOfGivenMonth(
+        year: currentYear,
+        month: currentMonth,
+        currentMonth: true,
+      );
       debugPrint('[budget_controller.dart] Budget added: ${budget.toJson()}');
     }
 
@@ -104,20 +133,26 @@ class BudgetController extends GetxController {
   }
 
   //================
-  // Get Budget of a given month, and year
+  // Get Budget of current month
   //================
+  double budgetOfCurrentMonth = 0;
   double budgetOfGivenMonth = 0;
 
-  Future<void> getBudgetByMonth({required int year, required int month}) async {
+  Future<void> getBudgetOfGivenMonth({
+    required int year,
+    required int month,
+    required bool currentMonth,
+  }) async {
     final double fetchedBudget = await budgetRepo.fetchMonthBudget(
       year: year,
       month: month - 1,
     );
 
-    budgetOfGivenMonth = fetchedBudget;
+    if (currentMonth) budgetOfCurrentMonth = fetchedBudget;
+    if (!currentMonth) budgetOfGivenMonth = fetchedBudget;
 
     debugPrint(
-      '[budget_controller.dart] Budget of $month/$year: $budgetOfGivenMonth',
+      '[budget_controller.dart] Budget of given date $month/$year: $budgetOfGivenMonth',
     );
 
     update();

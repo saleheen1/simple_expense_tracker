@@ -37,7 +37,7 @@ class DayCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            monthName,
+            monthName.substring(0, 3),
             style: TextUtils.b1Small(
               color: isSelected ? theme.primary : Colors.white,
               context: context,
