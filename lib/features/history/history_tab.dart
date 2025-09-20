@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
 import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
 import 'package:simple_expense_tracker/core/widgets/day_card.dart';
@@ -27,6 +26,9 @@ class HistoryTab extends StatelessWidget {
       body: DefaultMarginWidget(
         child: GetBuilder<BudgetController>(
           builder: (bc) {
+            final days = bc.getDaysOfSelectedMonth(
+              monthIndex: bc.selectedMonthIndex,
+            );
             return GetBuilder<ExpenseController>(
               builder: (ec) {
                 return Column(
@@ -66,27 +68,29 @@ class HistoryTab extends StatelessWidget {
                     //=====================
                     Row(
                       children: [
-                        _allButton(context, true),
                         Expanded(
                           child: SizedBox(
                             height: 75,
                             child: ListView.builder(
-                              itemCount: bc
-                                  .getWeekdaysOfSelectedMonth(
-                                    monthIndex: bc.selectedMonthIndex,
-                                  )
-                                  .length,
+                              itemCount: days.length + 1,
                               shrinkWrap: true,
                               physics: const AlwaysScrollableScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
+                                if (index == 0) {
+                                  return DayCard(
+                                    isSelected: false,
+                                    date: 0,
+                                    monthName: bc.months[bc.selectedMonthIndex],
+                                    weekdayName: "",
+                                  );
+                                }
+                                final day = days[index - 1];
                                 return DayCard(
                                   isSelected: false,
-                                  date: (index + 1).toString(),
+                                  date: day.date,
                                   monthName: bc.months[bc.selectedMonthIndex],
-                                  weekdayName: bc.getWeekdaysOfSelectedMonth(
-                                    monthIndex: bc.selectedMonthIndex,
-                                  )[index],
+                                  weekdayName: day.weekday,
                                 );
                               },
                             ),
@@ -155,35 +159,6 @@ class HistoryTab extends StatelessWidget {
               },
             );
           },
-        ),
-      ),
-    );
-  }
-
-  Widget _allButton(BuildContext context, bool isSelected) {
-    final theme = CustomTheme.of(context);
-
-    return Container(
-      width: 50,
-      height: 75,
-      margin: EdgeInsets.only(right: 15),
-      decoration: BoxDecoration(
-        color: isSelected ? theme.primary : Colors.transparent,
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(
-          color: isSelected
-              ? Colors.transparent
-              : Colors.white.withValues(alpha: 0.5),
-          width: 1,
-        ),
-      ),
-      child: Center(
-        child: Text(
-          'All',
-          style: TextUtils.title3(
-            color: isSelected ? theme.bgColor : Colors.white,
-            context: context,
-          ),
         ),
       ),
     );

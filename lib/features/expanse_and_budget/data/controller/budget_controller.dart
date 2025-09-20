@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simple_expense_tracker/core/helper/day_info.dart';
 import 'package:simple_expense_tracker/core/utils/snackbars.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/expense_controller.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/budget_model.dart';
@@ -30,18 +31,17 @@ class BudgetController extends GetxController {
     'December',
   ];
 
-  List<String> getWeekdaysOfSelectedMonth({required int monthIndex}) {
+  List<DayInfo> getDaysOfSelectedMonth({required int monthIndex}) {
     const names = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     final year = DateTime.now().year;
     final daysInMonth = DateTime(year, monthIndex + 2, 0).day;
 
-    final weekdays = List.generate(daysInMonth, (i) {
-      final weekday = names[DateTime(year, monthIndex + 1, i + 1).weekday - 1];
-      return weekday;
+    return List.generate(daysInMonth, (i) {
+      final date = i + 1;
+      final weekday = names[DateTime(year, monthIndex + 1, date).weekday - 1];
+      return DayInfo(date: date, weekday: weekday);
     });
-
-    return weekdays;
   }
 
   final years = ['2025', '2026'];

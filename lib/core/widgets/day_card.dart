@@ -5,7 +5,7 @@ import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 class DayCard extends StatelessWidget {
   final bool isSelected;
   final String monthName;
-  final String date;
+  final int date;
   final String weekdayName;
   const DayCard({
     super.key,
@@ -24,7 +24,9 @@ class DayCard extends StatelessWidget {
       height: 75,
       margin: EdgeInsets.only(right: 15),
       decoration: BoxDecoration(
-        color: isSelected ? theme.cardColor : Colors.transparent,
+        color: isSelected
+            ? (date == 0 ? theme.primary : theme.cardColor)
+            : Colors.transparent,
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
           color: isSelected
@@ -33,32 +35,42 @@ class DayCard extends StatelessWidget {
           width: 1,
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            monthName.substring(0, 3),
-            style: TextUtils.b1Small(
-              color: isSelected ? theme.primary : Colors.white,
-              context: context,
+      child: date == 0
+          ? Center(
+              child: Text(
+                'All',
+                style: TextUtils.title3(
+                  color: isSelected ? theme.bgColor : Colors.white,
+                  context: context,
+                ),
+              ),
+            )
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  monthName.substring(0, 3),
+                  style: TextUtils.b1Small(
+                    color: isSelected ? theme.primary : Colors.white,
+                    context: context,
+                  ),
+                ),
+                Text(
+                  date.toString(),
+                  style: TextUtils.title3(
+                    color: isSelected ? theme.primary : Colors.white,
+                    context: context,
+                  ),
+                ),
+                Text(
+                  weekdayName,
+                  style: TextUtils.b1Small(
+                    color: isSelected ? theme.primary : Colors.white,
+                    context: context,
+                  ),
+                ),
+              ],
             ),
-          ),
-          Text(
-            date,
-            style: TextUtils.title3(
-              color: isSelected ? theme.primary : Colors.white,
-              context: context,
-            ),
-          ),
-          Text(
-            weekdayName,
-            style: TextUtils.b1Small(
-              color: isSelected ? theme.primary : Colors.white,
-              context: context,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
