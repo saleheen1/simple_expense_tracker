@@ -29,6 +29,20 @@ class HistoryTab extends StatelessWidget {
             final days = bc.getDaysOfSelectedMonth(
               monthIndex: bc.selectedMonthIndex,
             );
+            final scrollController = ScrollController();
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (scrollController.hasClients) {
+                const double monthCardWidth = 100.0;
+                final double targetOffset =
+                    bc.selectedMonthIndex * monthCardWidth;
+                scrollController.jumpTo(
+                  targetOffset.clamp(
+                    0.0,
+                    scrollController.position.maxScrollExtent,
+                  ),
+                );
+              }
+            });
             return GetBuilder<ExpenseController>(
               builder: (ec) {
                 return Column(
@@ -45,6 +59,7 @@ class HistoryTab extends StatelessWidget {
                           child: SizedBox(
                             height: 35,
                             child: ListView.builder(
+                              controller: scrollController,
                               itemCount: bc.months.length,
                               shrinkWrap: true,
                               physics: const AlwaysScrollableScrollPhysics(),
@@ -79,15 +94,11 @@ class HistoryTab extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 if (index == 0) {
                                   return DayCard(
-                                    isSelected: bc.isDaySelected(
-                                      0,
-                                    ),
+                                    isSelected: bc.isDaySelected(0),
                                     date: 0,
                                     monthName: bc.months[bc.selectedMonthIndex],
                                     weekdayName: "",
-                                    onTap: () => bc.selectDayInHistory(
-                                      0,
-                                    ),
+                                    onTap: () => bc.selectDayInHistory(0),
                                   );
                                 }
                                 final day = days[index - 1];
@@ -98,9 +109,7 @@ class HistoryTab extends StatelessWidget {
                                   date: day.date,
                                   monthName: bc.months[bc.selectedMonthIndex],
                                   weekdayName: day.weekday,
-                                  onTap: () => bc.selectDayInHistory(
-                                    index,
-                                  ),
+                                  onTap: () => bc.selectDayInHistory(index),
                                 );
                               },
                             ),
