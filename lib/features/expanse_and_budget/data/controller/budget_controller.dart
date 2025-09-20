@@ -31,6 +31,24 @@ class BudgetController extends GetxController {
     'December',
   ];
 
+  final years = ['2025', '2026'];
+  final amountController = TextEditingController();
+
+  String selectedMonth = 'January';
+  String selectedYear = '2025';
+  int selectedMonthIndex = 0; // Add selected month index for history tab
+  int selectedDayIndex = 0;
+
+  void updateMonth(String month) {
+    selectedMonth = month;
+    update();
+  }
+
+  void updateYear(String year) {
+    selectedYear = year;
+    update();
+  }
+
   List<DayInfo> getDaysOfSelectedMonth({required int monthIndex}) {
     const names = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -44,21 +62,27 @@ class BudgetController extends GetxController {
     });
   }
 
-  final years = ['2025', '2026'];
-  final amountController = TextEditingController();
+  Future<void> selectDayInHistory(int dayIndex) async {
+    selectedDayIndex = dayIndex;
 
-  String selectedMonth = 'January';
-  String selectedYear = '2025';
-  int selectedMonthIndex = 0; // Add selected month index for history tab
-
-  void updateMonth(String month) {
-    selectedMonth = month;
+    // If you want to add functionality later, you can do it here
+    // For now, just update the UI
     update();
+
+    if (dayIndex == 0) {
+      debugPrint('[budget_controller.dart] Selected: All days');
+    } else {
+      final days = getDaysOfSelectedMonth(monthIndex: selectedMonthIndex);
+      if (dayIndex - 1 < days.length) {
+        debugPrint(
+          '[budget_controller.dart] Selected day: ${days[dayIndex - 1].date}',
+        );
+      }
+    }
   }
-
-  void updateYear(String year) {
-    selectedYear = year;
-    update();
+  // Helper method to check if a specific day is selected
+  bool isDaySelected(int dayIndex) {
+    return selectedDayIndex == dayIndex;
   }
 
   // Add method to handle month selection in history tab
