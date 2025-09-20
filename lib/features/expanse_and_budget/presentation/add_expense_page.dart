@@ -89,7 +89,6 @@ class AddExpensePage extends StatelessWidget {
                     ButtonPrimary(
                       text: 'Save',
                       onPressed: () {
-                        debugPrint('Wait!');
                         ec.addExpense();
                       },
                     ),

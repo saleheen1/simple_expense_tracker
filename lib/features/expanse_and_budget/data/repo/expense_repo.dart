@@ -28,22 +28,32 @@ class ExpenseRepo extends GetxController {
   }
 
   // ==================
-  // Read expenses of a given month and year
+  // Read expenses of a given year, month (and optionally day)
   // ==================
-  Future<List<ExpenseModel>> fetchExpensesByMonth({
+  Future<List<ExpenseModel>> fetchExpenses({
     required int year,
     required int month,
+    int? day, // if provided, fetch by day too
   }) async {
     try {
       final db = await _dbHelper.database;
 
       final yearStr = year.toString();
-      final monthStr = month.toString().padLeft(2, '0'); // e.g. "09"
+      final monthStr = month.toString().padLeft(2, '0');
+      final whereArgs = [yearStr, monthStr];
+
+      String where = "strftime('%Y', date) = ? AND strftime('%m', date) = ?";
+
+      if (day != null) {
+        final dayStr = day.toString().padLeft(2, '0'); 
+        where += " AND strftime('%d', date) = ?";
+        whereArgs.add(dayStr);
+      }
 
       final result = await db.query(
         'expenses',
-        where: "strftime('%Y', date) = ? AND strftime('%m', date) = ?",
-        whereArgs: [yearStr, monthStr],
+        where: where,
+        whereArgs: whereArgs,
       );
 
       return result.map((row) => ExpenseModel.fromJson(row)).toList();

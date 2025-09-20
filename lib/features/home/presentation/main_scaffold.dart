@@ -49,7 +49,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     await Get.find<BudgetController>().selectMonthInHistory(currentMonth - 1);
 
     // Fetch current month's expenses
-    await Get.find<ExpenseController>().getExpensesByGivenMonth(
+    await Get.find<ExpenseController>().getExpenses(
       year: currentYear,
       month: currentMonth,
       isCurrentMonth: true
@@ -96,7 +96,7 @@ class _MainScaffoldState extends State<MainScaffold> {
             ),
             child: GestureDetector(
               onTap: () {
-                Get.to(AddExpensePage());
+                Get.to(() => AddExpensePage());
               },
               child: Icon(Icons.add_rounded, color: theme.bgColor, size: 40),
             ),

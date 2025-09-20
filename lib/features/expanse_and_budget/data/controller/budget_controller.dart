@@ -62,29 +62,6 @@ class BudgetController extends GetxController {
     });
   }
 
-  Future<void> selectDayInHistory(int dayIndex) async {
-    selectedDayIndex = dayIndex;
-
-    // If you want to add functionality later, you can do it here
-    // For now, just update the UI
-    update();
-
-    if (dayIndex == 0) {
-      debugPrint('[budget_controller.dart] Selected: All days');
-    } else {
-      final days = getDaysOfSelectedMonth(monthIndex: selectedMonthIndex);
-      if (dayIndex - 1 < days.length) {
-        debugPrint(
-          '[budget_controller.dart] Selected day: ${days[dayIndex - 1].date}',
-        );
-      }
-    }
-  }
-  // Helper method to check if a specific day is selected
-  bool isDaySelected(int dayIndex) {
-    return selectedDayIndex == dayIndex;
-  }
-
   // Add method to handle month selection in history tab
   Future<void> selectMonthInHistory(int monthIndex) async {
     selectedMonthIndex = monthIndex;
@@ -97,12 +74,9 @@ class BudgetController extends GetxController {
       month: monthIndex + 1,
       isCurrentMonth: false,
     );
-    expenseController.getExpensesByGivenMonth(
-      year: currentYear,
-      month: monthIndex + 1,
-      isCurrentMonth: false,
-    );
+    expenseController.getExpenses(year: currentYear, month: monthIndex + 1);
     update();
+
     debugPrint(
       '[budget_controller.dart] Selected month: ${months[monthIndex]}',
     );
@@ -110,6 +84,42 @@ class BudgetController extends GetxController {
 
   // Get currently selected month name for history tab
   String get selectedHistoryMonthName => months[selectedMonthIndex];
+
+  Future<void> selectDayInHistory(int dayIndex) async {
+    selectedDayIndex = dayIndex;
+
+    final now = DateTime.now();
+    final currentYear = now.year;
+
+    if (dayIndex == 0) {
+      expenseController.getExpenses(
+        year: currentYear,
+        month: selectedMonthIndex + 1,
+      );
+      debugPrint('[budget_controller.dart] Selected: All days');
+    }
+
+    if (dayIndex != 0) {
+      final days = getDaysOfSelectedMonth(monthIndex: selectedMonthIndex);
+      if (dayIndex - 1 < days.length) {
+        expenseController.getExpenses(
+          year: currentYear,
+          month: selectedMonthIndex + 1,
+          day: selectedDayIndex,
+        );
+        debugPrint(
+          '[budget_controller.dart] Selected day: ${days[dayIndex - 1].date}',
+        );
+      }
+    }
+    
+    update();
+  }
+
+  // Helper method to check if a specific day is selected
+  bool isDaySelected(int dayIndex) {
+    return selectedDayIndex == dayIndex;
+  }
 
   bool filterBasicDetails() {
     if (amountController.text.isEmpty) {

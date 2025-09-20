@@ -58,7 +58,11 @@ class ExpenseController extends GetxController {
       final now = DateTime.now();
       final currentYear = now.year;
       final currentMonth = now.month;
-      getExpensesByGivenMonth(year: currentYear, month: currentMonth, isCurrentMonth: true);
+      //To make home tab up to date.
+      getExpenses(year: currentYear, month: currentMonth, isCurrentMonth: true);
+      //To make history tab up to date.
+      getExpenses(year: currentYear, month: currentMonth);
+
       debugPrint(
         '[expense_controller.dart] Expense added: ${expense.toJson()}',
       );
@@ -72,22 +76,24 @@ class ExpenseController extends GetxController {
   //================
   // Fetch expenses
   //================
-  List<ExpenseModel> expensesOfGivenMonth = [];
+  List<ExpenseModel> expensesOfGivenDate = [];
   List<ExpenseModel> expensesOfCurrentMonth = [];
-  double totalExpenseOfGivenMonth = 0;
+  double totalExpenseOfGivenDate = 0;
   double totalExpenseOfCurrentMonth = 0;
 
-  Future<void> getExpensesByGivenMonth({
+  Future<void> getExpenses({
     required int year,
     required int month,
-    required bool isCurrentMonth,
+    bool isCurrentMonth = false,
+    int? day,
   }) async {
-    final fetchedExpenses = await expenseRepo.fetchExpensesByMonth(
+    final fetchedExpenses = await expenseRepo.fetchExpenses(
       year: year,
       month: month,
+      day: day,
     );
 
-    if (!isCurrentMonth) expensesOfGivenMonth = fetchedExpenses;
+    if (!isCurrentMonth) expensesOfGivenDate = fetchedExpenses;
     if (isCurrentMonth) expensesOfCurrentMonth = fetchedExpenses;
 
     double totalExpenses = 0.0;
@@ -96,9 +102,7 @@ class ExpenseController extends GetxController {
     }
 
     if (!isCurrentMonth) {
-      totalExpenseOfGivenMonth = double.parse(
-        totalExpenses.toStringAsFixed(2),
-      );
+      totalExpenseOfGivenDate = double.parse(totalExpenses.toStringAsFixed(2));
     }
     if (isCurrentMonth) {
       totalExpenseOfCurrentMonth = double.parse(
@@ -106,9 +110,8 @@ class ExpenseController extends GetxController {
       );
     }
 
-
     debugPrint(
-      '[expense_controller]: total expense of the month given month: $totalExpenseOfGivenMonth, '
+      '[expense_controller]: total expense of the month given month: $totalExpenseOfGivenDate, '
       'and expenses details: ${fetchedExpenses.map((e) => e.toJson()).toList()}',
     );
 

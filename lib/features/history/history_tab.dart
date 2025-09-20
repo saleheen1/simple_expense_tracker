@@ -121,7 +121,7 @@ class HistoryTab extends StatelessWidget {
                         //=============================
                         Expanded(
                           child: ExpenseAndBudgetCard(
-                            amount: '${ec.totalExpenseOfGivenMonth}',
+                            amount: '${ec.totalExpenseOfGivenDate}',
                           ),
                         ),
                         gapW(20),
@@ -150,15 +150,15 @@ class HistoryTab extends StatelessWidget {
 
                     Expanded(
                       child: ListView.builder(
-                        itemCount: ec.expensesOfGivenMonth.length,
+                        itemCount: ec.expensesOfGivenDate.length,
                         shrinkWrap: true,
                         padding: EdgeInsets.zero,
                         physics: const AlwaysScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return ExpanseCard(
                             index: index,
-                            title: ec.expensesOfGivenMonth[index].name,
-                            amount: ec.expensesOfGivenMonth[index].cost
+                            title: ec.expensesOfGivenDate[index].name,
+                            amount: ec.expensesOfGivenDate[index].cost
                                 .toString(),
                           );
                         },
