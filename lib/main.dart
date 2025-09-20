@@ -13,6 +13,7 @@ void main() async {
   runApp(const MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     return CustomTheme(
       customThemeData: darkTheme,
       child: GetMaterialApp(
-        title: 'Tasbih tracker',
+        title: 'Simple Expense Tracker',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
           primaryColor: darkTheme.primary,

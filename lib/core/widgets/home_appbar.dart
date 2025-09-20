@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
+import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
 
 class HomeAppbar extends StatelessWidget {
@@ -21,12 +22,15 @@ class HomeAppbar extends StatelessWidget {
       ),
       decoration: BoxDecoration(color: theme.bgColor, borderRadius: radius(3)),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           InkWell(
             onTap: onMenuTap,
             child: Icon(Icons.menu, size: 30, color: theme.primary),
           ),
+
+          gapW(20),
+
+          Text(style: TextUtils.title1Bold(context: context), 'This month'),
         ],
       ),
     );

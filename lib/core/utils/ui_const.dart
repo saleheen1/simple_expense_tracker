@@ -14,7 +14,7 @@ EdgeInsets edgeInsetsZero = EdgeInsets.zero;
 
 buttonShadow(BuildContext context) => [
   BoxShadow(
-    color: CustomTheme.of(context).primary.withOpacity(0.19),
+    color: CustomTheme.of(context).primary.withValues(alpha: 0.19),
     blurRadius: 20,
     offset: Offset(0, 12),
   ),

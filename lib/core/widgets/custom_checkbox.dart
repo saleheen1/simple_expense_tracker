@@ -57,7 +57,7 @@ class CustomCheckbox extends StatelessWidget {
       side: BorderSide(width: 1, color: Colors.white),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
-        side: BorderSide(width: 1, color: Colors.black12.withOpacity(0.3)),
+        side: BorderSide(width: 1, color: Colors.black.withValues(alpha: 1.3)),
       ),
       value: value,
       onChanged: onChanged,
