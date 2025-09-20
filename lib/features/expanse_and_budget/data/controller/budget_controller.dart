@@ -191,7 +191,6 @@ class BudgetController extends GetxController {
     debugPrint(
       '[budget_controller.dart] Budget of given date $month/$year: $budgetOfGivenMonth',
     );
-
     update();
   }
 }

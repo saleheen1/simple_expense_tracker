@@ -81,13 +81,13 @@ class HistoryTab extends StatelessWidget {
                                   return DayCard(
                                     isSelected: bc.isDaySelected(
                                       0,
-                                    ), // Use the helper method
+                                    ),
                                     date: 0,
                                     monthName: bc.months[bc.selectedMonthIndex],
                                     weekdayName: "",
                                     onTap: () => bc.selectDayInHistory(
                                       0,
-                                    ), // Add onTap callback
+                                    ),
                                   );
                                 }
                                 final day = days[index - 1];
@@ -100,7 +100,7 @@ class HistoryTab extends StatelessWidget {
                                   weekdayName: day.weekday,
                                   onTap: () => bc.selectDayInHistory(
                                     index,
-                                  ), // Add onTap callback
+                                  ),
                                 );
                               },
                             ),
