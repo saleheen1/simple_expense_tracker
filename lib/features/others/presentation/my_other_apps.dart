@@ -30,6 +30,29 @@ class MyOtherApps extends StatelessWidget {
               gapH(50),
 
               //======================
+              //Tasbih tracker
+              //======================
+              Text(
+                style: TextUtils.title2(context: context),
+                'Floating Tasbih Tracker',
+              ),
+              gapH(12),
+              GestureDetector(
+                onTap: () async {
+                  final url = Uri.parse(
+                    'https://play.google.com/store/apps/details?id=com.floating.tasbih.counter.app',
+                  );
+                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                },
+                child: Image.asset(
+                  "assets/images/tasbih_tracker.png",
+                  width: 75,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              gapH(30),
+
+              //======================
               //Al Quran app link
               //======================
               Text(style: TextUtils.title2(context: context), 'Al Quran'),
@@ -101,12 +124,12 @@ class MyOtherApps extends StatelessWidget {
                   ),
                 ),
               ),
-              gapH(70),
+              gapH(60),
 
               ButtonPrimary(
                 text: 'See my all apps',
                 bgColor: theme.darkLight,
-                textColor: theme.golden,
+                textColor: Colors.yellow[800],
                 boxshadow: false,
                 borderRadius: 5,
                 onPressed: () async {
@@ -116,6 +139,8 @@ class MyOtherApps extends StatelessWidget {
                   await launchUrl(url, mode: LaunchMode.externalApplication);
                 },
               ),
+
+              gapH(60),
             ],
           ),
         ),

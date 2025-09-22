@@ -23,7 +23,7 @@ class HomeDrawer extends StatelessWidget {
         borderRadius: BorderRadius.zero,
         child: Container(
           decoration: BoxDecoration(
-            color: theme.bgColor,
+            color: theme.cardColor,
             borderRadius: BorderRadius.zero,
           ),
           child: Column(
@@ -49,37 +49,30 @@ class HomeDrawer extends StatelessWidget {
                           ],
                         ),
                       ),
-                      gapH(30),
+                      // gapH(30),
 
-                      GestureDetector(
-                        onTap: () async {
-                          final url = Uri.parse(
-                            'https://play.google.com/store/apps/details?id=com.easy.quran.learning.inshirah',
-                          );
+                      // GestureDetector(
+                      //   onTap: () async {
+                      //     final url = Uri.parse(
+                      //       'https://play.google.com/store/apps/details?id=com.easy.quran.learning.inshirah',
+                      //     );
+                      //       await launchUrl(
+                      //         url,
+                      //         mode: LaunchMode.externalApplication,
+                      //       );
 
-                          if (await canLaunchUrl(url)) {
-                            await launchUrl(
-                              url,
-                              mode: LaunchMode.externalApplication,
-                            );
-                          } else {
-                            Get.snackbar(
-                              'Error',
-                              'Could not launch the Play Store link',
-                            );
-                          }
-                        },
-                        child: Row(
-                          children: [
-                            Icon(Icons.star_rounded, color: theme.primary),
-                            gapW(15),
-                            Text(
-                              'Rate this app',
-                              style: TextUtils.title3(context: context),
-                            ),
-                          ],
-                        ),
-                      ),
+                      //   },
+                      //   child: Row(
+                      //     children: [
+                      //       Icon(Icons.star_rounded, color: theme.primary),
+                      //       gapW(15),
+                      //       Text(
+                      //         'Rate this app',
+                      //         style: TextUtils.title3(context: context),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       gapH(30),
 
                       GestureDetector(

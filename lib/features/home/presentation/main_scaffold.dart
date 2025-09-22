@@ -30,9 +30,6 @@ class _MainScaffoldState extends State<MainScaffold> {
   loadAtStart() async {
     /// Print the physical location of the database file on device/emulator
     final dbPath = join(await getDatabasesPath(), 'simple_expense_tracker.db');
-    debugPrint(
-      '[main_scaffold.dart]📍 DB 🗂️ for this project located at(applicable for simulators\' only): $dbPath',
-    );
 
     // Get current local year & month
     final now = DateTime.now();
@@ -40,16 +37,19 @@ class _MainScaffoldState extends State<MainScaffold> {
     final currentMonth = now.month;
 
     //Fetch budget of the month.
-    await Get.find<BudgetController>().getBudgetOfGivenMonth(
+    final budgetController = Get.find<BudgetController>();
+    final expenseController = Get.find<ExpenseController>();
+
+    await budgetController.getBudgetOfGivenMonth(
       year: currentYear,
       month: currentMonth,
       isCurrentMonth: true,
     );
 
-    await Get.find<BudgetController>().selectMonthInHistory(currentMonth - 1);
+    await budgetController.selectMonthInHistory(currentMonth - 1);
 
     // Fetch current month's expenses
-    await Get.find<ExpenseController>().getExpenses(
+    await expenseController.getExpenses(
       year: currentYear,
       month: currentMonth,
       isCurrentMonth: true,
@@ -90,7 +90,7 @@ class _MainScaffoldState extends State<MainScaffold> {
               onTap: () {
                 Get.to(() => AddExpensePage());
               },
-              child: Icon(Icons.add_rounded, color: theme.bgColor, size: 40),
+              child: Icon(Icons.add_rounded, color: theme.bgColor, size: 30),
             ),
           ),
         );

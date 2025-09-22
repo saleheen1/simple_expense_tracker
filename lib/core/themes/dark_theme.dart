@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'custom_theme.dart';
 
 final darkTheme = CustomThemeData(
-  primary: const Color(0xff34B700),
+  // primary: const Color(0xff34B700),
+  primary: const Color(0xff1EAE67),
+  // primary: const Color.fromARGB(255, 214, 129, 1),
   grey1: const Color(0xff777777),
   grey2: const Color(0xffD1D1D1),
   bgColor: const Color(0xff000000),

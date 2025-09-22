@@ -38,11 +38,8 @@ class ExpenseController extends GetxController {
   Future<bool> addExpense() async {
     if (!filterBasicDetails()) return false;
     setLoading(true);
-
-    // artificial delay for loader widget to show up.(inproved UX)
     await Future.delayed(const Duration(seconds: 1));
 
-    // Parse the user-entered date
     final parsedDate = DateFormat('MMM d, yyyy').parse(dateController.text);
     final isoDate = DateFormat('yyyy-MM-dd').format(parsedDate);
 

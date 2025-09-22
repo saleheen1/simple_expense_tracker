@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_expense_tracker/core/helper/common_helper.dart';
 import 'package:simple_expense_tracker/core/helper/pick_date.dart';
+import 'package:simple_expense_tracker/core/utils/format_date_time.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
 import 'package:simple_expense_tracker/core/widgets/appbar_common.dart';
 import 'package:simple_expense_tracker/core/widgets/button_primary.dart';
@@ -10,8 +11,25 @@ import 'package:simple_expense_tracker/core/widgets/default_margin_widget.dart';
 import 'package:simple_expense_tracker/core/widgets/loader_widget.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/expense_controller.dart';
 
-class AddExpensePage extends StatelessWidget {
+class AddExpensePage extends StatefulWidget {
   const AddExpensePage({super.key});
+
+  @override
+  State<AddExpensePage> createState() => _AddExpensePageState();
+}
+
+class _AddExpensePageState extends State<AddExpensePage> {
+  @override
+  void initState() {
+    super.initState();
+    fillData();
+  }
+
+  //fill data
+  fillData() {
+    final ec = Get.find<ExpenseController>();
+    ec.dateController.text = formatDateByMMMDDYY(DateTime.now()) ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +53,9 @@ class AddExpensePage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: CustomInput(
-                            labelText: 'Month',
-                            hintText: 'This month',
-                            readOnly: true,
-                          ),
-                        ),
-                        gapW(20),
-
-                        Expanded(
-                          child: CustomInput(
                             controller: ec.dateController,
                             labelText: 'Date',
-                            hintText: 'today',
+                            hintText: 'Pick a date',
                             readOnly: true,
                             onTap: () async {
                               final date = await selectDate(context);
@@ -80,6 +89,7 @@ class AddExpensePage extends StatelessWidget {
                             controller: ec.amountController,
                             labelText: 'Cost',
                             hintText: 'Enter cost',
+                            isNumberField: true,
                           ),
                         ),
                       ],

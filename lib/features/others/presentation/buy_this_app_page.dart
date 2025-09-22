@@ -24,7 +24,7 @@ class BuyThisAppPage extends StatelessWidget {
             //====================
             Text(
               style: TextUtils.title3(context: context),
-              'This app is developed in Flutter which can be used to build both Android and iOS app. If you are interested, please contact me.',
+              'This app is developed in Flutter which can be used to build both Android, iOS and web app in a single codebase. If you are interested, please contact me.',
             ),
             gapH(35),
 
@@ -38,7 +38,7 @@ class BuyThisAppPage extends StatelessWidget {
             gapH(5),
             Text(
               style: TextUtils.title3(context: context),
-              'Whatsapp:  +880 17818 73788',
+              'Whatsapp:  +8801781873788',
             ),
             gapH(25),
 
