@@ -30,8 +30,12 @@ class BudgetRepo extends GetxController {
   //=================
   // Read budget of a given month, and year
   //=================
-  Future<double> fetchMonthBudget({required int year, required int month}) async {
+  Future<double> fetchMonthBudget({
+    required int year,
+    required int month,
+  }) async {
     try {
+      debugPrint('[budget_repo]: Fetching month budget: $year, $month');
       final db = await _dbHelper.database;
 
       final result = await db.query(
