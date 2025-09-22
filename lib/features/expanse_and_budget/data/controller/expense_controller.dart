@@ -38,36 +38,43 @@ class ExpenseController extends GetxController {
   Future<bool> addExpense() async {
     if (!filterBasicDetails()) return false;
     setLoading(true);
-    await Future.delayed(const Duration(seconds: 1));
 
     final parsedDate = DateFormat('MMM d, yyyy').parse(dateController.text);
     final isoDate = DateFormat('yyyy-MM-dd').format(parsedDate);
 
     final expense = ExpenseModel(
-      name: nameController.text,
+      description: nameController.text,
       date: isoDate,
       cost: double.parse(amountController.text),
     );
 
-    final success = await expenseRepo.upsertExpense(expense);
-
-    if (success) {
-      final now = DateTime.now();
-      final currentYear = now.year;
-      final currentMonth = now.month;
-      //To make home tab up to date.
-      getExpenses(year: currentYear, month: currentMonth, isCurrentMonth: true);
-      //To make history tab up to date.
-      getExpenses(year: currentYear, month: currentMonth);
-
-      debugPrint(
-        '[expense_controller.dart] Expense added: ${expense.toJson()}',
-      );
+    try {
+      final success = await expenseRepo.upsertExpense(expense);
+      if (success) {
+        final now = DateTime.now();
+        final currentYear = now.year;
+        final currentMonth = now.month;
+        //To make home tab up to date.
+        getExpenses(
+          year: currentYear,
+          month: currentMonth,
+          isCurrentMonth: true,
+        );
+        //To make history tab up to date.
+        getExpenses(year: currentYear, month: currentMonth);
+        nameController.clear();
+        amountController.clear();
+        dateController.clear();
+      }
+    } catch (e) {
+      debugPrint('[expense_controller.dart] Error adding expense: $e');
+      return false;
     }
 
     setLoading(false);
     Get.back();
-    return success;
+    // return success;
+    return true;
   }
 
   //================

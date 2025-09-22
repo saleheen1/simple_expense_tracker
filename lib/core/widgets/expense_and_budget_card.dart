@@ -37,7 +37,7 @@ class ExpenseAndBudgetCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              style: TextUtils.b1SemiBold(context: context),
+              style: TextUtils.b1Regular(context: context),
               isBudgetCard ? 'Budget' : 'Total expense',
             ),
             gapH(10),

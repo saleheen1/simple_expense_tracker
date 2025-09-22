@@ -169,7 +169,7 @@ class HistoryTab extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return ExpanseCard(
                               index: index,
-                              title: ec.expensesOfGivenDate[index].name,
+                              title: ec.expensesOfGivenDate[index].description,
                               amount: ec.expensesOfGivenDate[index].cost
                                   .toString(),
                             );

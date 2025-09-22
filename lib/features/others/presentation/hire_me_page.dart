@@ -27,15 +27,15 @@ class HireMePage extends StatelessWidget {
               //=======================
               Text(
                 style: TextUtils.title3(context: context),
-                'Hey there, my name is saleheen. A passionate mobile app developer and UI/UX designer. I work in flutter which is used for both Android and iOS app development. If you have any app idea that you want to develop or need any app interface designed, feel free to contact me. You can visit my upwork and fiverr profile to see what my previous clients said about me.',
+                'Hey there, my name is saleheen. A passionate mobile app developer and UI/UX designer. Achieved top rated in Upwork and level 2 in Fiverr. Worked with hundreads of clients worldwide. I work in flutter which is used for cross platform development (Android, iOS, Web). If you have any app idea that you want to develop or need any app interface designed, feel free to contact me.',
               ),
               gapH(50),
 
               //========================
               //Upwork and fiverr links
               //========================
-              _workplaceLinks(context),
-              gapH(70),
+              // _workplaceLinks(context),
+              // gapH(70),
 
               //=====================
               //Contact infos
@@ -48,71 +48,71 @@ class HireMePage extends StatelessWidget {
     );
   }
 
-  Widget _workplaceLinks(BuildContext context) {
-    final theme = CustomTheme.of(context);
-    return Column(
-      children: [
-        //==========================
-        //Upwork
-        //==========================
-        Row(
-          children: [
-            SvgPicture.asset(
-              AssetsSVGConst.upwork,
-              width: 35,
-              height: 35,
-              colorFilter: ColorFilter.mode(theme.primary, BlendMode.srcIn),
-            ),
-            gapW(15),
+  // Widget _workplaceLinks(BuildContext context) {
+  //   final theme = CustomTheme.of(context);
+  //   return Column(
+  //     children: [
+  //       //==========================
+  //       //Upwork
+  //       //==========================
+  //       Row(
+  //         children: [
+  //           SvgPicture.asset(
+  //             AssetsSVGConst.upwork,
+  //             width: 35,
+  //             height: 35,
+  //             colorFilter: ColorFilter.mode(theme.primary, BlendMode.srcIn),
+  //           ),
+  //           gapW(15),
 
-            ButtonPrimary(
-              text: 'Visit my upwork profile',
-              bgColor: theme.darkLight,
-              textColor: theme.golden,
-              width: 200,
-              boxshadow: false,
-              borderRadius: 5,
-              onPressed: () async {
-                final url = Uri.parse(
-                  'https://www.upwork.com/freelancers/~014b24220afe0f5459?mp_source=share',
-                );
-                await launchUrl(url, mode: LaunchMode.externalApplication);
-              },
-            ),
-          ],
-        ),
-        gapH(20),
+  //           ButtonPrimary(
+  //             text: 'Visit my upwork profile',
+  //             bgColor: theme.darkLight,
+  //             textColor: theme.golden,
+  //             width: 200,
+  //             boxshadow: false,
+  //             borderRadius: 5,
+  //             onPressed: () async {
+  //               final url = Uri.parse(
+  //                 'https://www.upwork.com/freelancers/~014b24220afe0f5459?mp_source=share',
+  //               );
+  //               await launchUrl(url, mode: LaunchMode.externalApplication);
+  //             },
+  //           ),
+  //         ],
+  //       ),
+  //       gapH(20),
 
-        //===========================
-        //Fiverr
-        //============================
-        Row(
-          children: [
-            SvgPicture.asset(
-              AssetsSVGConst.fiverr,
-              width: 35,
-              height: 35,
-              colorFilter: ColorFilter.mode(Color(0xFF8DF573), BlendMode.srcIn),
-            ),
-            gapW(15),
+  //       //===========================
+  //       //Fiverr
+  //       //============================
+  //       Row(
+  //         children: [
+  //           SvgPicture.asset(
+  //             AssetsSVGConst.fiverr,
+  //             width: 35,
+  //             height: 35,
+  //             colorFilter: ColorFilter.mode(Color(0xFF8DF573), BlendMode.srcIn),
+  //           ),
+  //           gapW(15),
 
-            ButtonPrimary(
-              text: 'Visit my fiverr profile',
-              bgColor: theme.darkLight,
-              textColor: theme.golden,
-              boxshadow: false,
-              width: 200,
-              borderRadius: 5,
-              onPressed: () async {
-                final url = Uri.parse('https://www.fiverr.com/saleheen1');
-                await launchUrl(url, mode: LaunchMode.externalApplication);
-              },
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+  //           ButtonPrimary(
+  //             text: 'Visit my fiverr profile',
+  //             bgColor: theme.darkLight,
+  //             textColor: theme.golden,
+  //             boxshadow: false,
+  //             width: 200,
+  //             borderRadius: 5,
+  //             onPressed: () async {
+  //               final url = Uri.parse('https://www.fiverr.com/saleheen1');
+  //               await launchUrl(url, mode: LaunchMode.externalApplication);
+  //             },
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _contactInfos(BuildContext context) {
     final theme = CustomTheme.of(context);
@@ -127,13 +127,13 @@ class HireMePage extends StatelessWidget {
 
         Text(
           style: TextUtils.title3(context: context),
-          'Whatsapp: +880 17818 73788',
+          'Whatsapp: +8801781873788',
         ),
         gapH(15),
 
         Text(
           style: TextUtils.title3(context: context),
-          'Telegram: +880 17818 73788',
+          'Telegram: +8801781873788',
         ),
         gapH(15),
 

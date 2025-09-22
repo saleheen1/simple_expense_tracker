@@ -69,7 +69,7 @@ class ExpanseCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: TextUtils.title3(context: context),
+                        style: TextUtils.b1SemiBold(context: context),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -80,7 +80,10 @@ class ExpanseCard extends StatelessWidget {
                       //===============================================
                       Text(
                         '\$$amount',
-                        style: TextUtils.b1Regular(context: context),
+                        style: TextUtils.caption1(
+                          context: context,
+                          color: theme.primary,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

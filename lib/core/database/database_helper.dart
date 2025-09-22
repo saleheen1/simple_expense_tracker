@@ -17,11 +17,7 @@ class DatabaseHelper {
 
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'simple_expense_tracker.db');
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _createTables,
-    );
+    return await openDatabase(path, version: 1, onCreate: _createTables);
   }
 
   Future<void> _createTables(Database db, int version) async {
@@ -30,7 +26,6 @@ class DatabaseHelper {
       CREATE TABLE expenses(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         date TEXT NOT NULL,
-        name TEXT NOT NULL,
         description TEXT NOT NULL,
         cost REAL NOT NULL
       )

@@ -140,9 +140,6 @@ class BudgetController extends GetxController {
     if (!filterBasicDetails()) return false;
     setLoading(true);
 
-    // artificial delay for loader widget to show up.(inproved UX)
-    await Future.delayed(const Duration(seconds: 1));
-
     final budget = BudgetModel(
       year: int.parse(selectedYear),
       month: months.indexOf(selectedMonth),
