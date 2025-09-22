@@ -24,61 +24,61 @@ class HomeTab extends StatelessWidget {
           HomeAppbar(onMenuTap: onMenuTap),
 
           Expanded(
-            child: DefaultMarginWidget(
-              child: GetBuilder<BudgetController>(
-                builder: (bc) {
-                  return GetBuilder<ExpenseController>(
-                    builder: (ec) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          gapH(15),
-                          //=============================
-                          //Total expanse and budget
-                          //=============================
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //=============================
-                              //Total expanse
-                              //=============================
-                              Expanded(
-                                child: ExpenseAndBudgetCard(
-                                  amount: '${ec.totalExpenseOfCurrentMonth}',
+            child: SingleChildScrollView(
+              child: DefaultMarginWidget(
+                child: GetBuilder<BudgetController>(
+                  builder: (bc) {
+                    return GetBuilder<ExpenseController>(
+                      builder: (ec) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            gapH(15),
+                            //=============================
+                            //Total expanse and budget
+                            //=============================
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                //=============================
+                                //Total expanse
+                                //=============================
+                                Expanded(
+                                  child: ExpenseAndBudgetCard(
+                                    amount: '${ec.totalExpenseOfCurrentMonth}',
+                                  ),
                                 ),
-                              ),
-                              gapW(20),
+                                gapW(20),
 
-                              //=============================
-                              //Budget
-                              //=============================
-                              Expanded(
-                                child: ExpenseAndBudgetCard(
-                                  isBudgetCard: true,
-                                  amount: '${bc.budgetOfCurrentMonth}',
+                                //=============================
+                                //Budget
+                                //=============================
+                                Expanded(
+                                  child: ExpenseAndBudgetCard(
+                                    isBudgetCard: true,
+                                    amount: '${bc.budgetOfCurrentMonth}',
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          gapH(25),
-
-                          //=========================
-                          //Expanses list
-                          //=========================
-                          if (ec.expensesOfCurrentMonth.isNotEmpty)
-                            Text(
-                              style: TextUtils.title3(context: context),
-                              'Expense list',
+                              ],
                             ),
-                          gapH(20),
+                            gapH(25),
 
-                          if (ec.expensesOfCurrentMonth.isNotEmpty)
-                            Expanded(
-                              child: ListView.builder(
+                            //=========================
+                            //Expanses list
+                            //=========================
+                            if (ec.expensesOfCurrentMonth.isNotEmpty)
+                              Text(
+                                style: TextUtils.title3(context: context),
+                                'Expense list',
+                              ),
+                            gapH(20),
+
+                            if (ec.expensesOfCurrentMonth.isNotEmpty)
+                              ListView.builder(
                                 itemCount: ec.expensesOfCurrentMonth.length,
                                 shrinkWrap: true,
                                 padding: EdgeInsets.zero,
-                                physics: const AlwaysScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return ExpanseCard(
                                     index: index,
@@ -86,19 +86,21 @@ class HomeTab extends StatelessWidget {
                                   );
                                 },
                               ),
-                            ),
 
-                          //=========================
-                          // No expenses added
-                          //=========================
-                          if (ec.expensesOfCurrentMonth.isEmpty &&
-                              !ec.isLoading)
-                            NoExpenseFound(),
-                        ],
-                      );
-                    },
-                  );
-                },
+                            //=========================
+                            // No expenses added
+                            //=========================
+                            if (ec.expensesOfCurrentMonth.isEmpty &&
+                                !ec.isLoading)
+                              NoExpenseFound(),
+
+                            gapH(30),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           ),
