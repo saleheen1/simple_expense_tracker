@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_expense_tracker/core/utils/snackbars.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/budget_controller.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/expense_model.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/repo/expense_repo.dart';
 
@@ -60,8 +61,10 @@ class ExpenseController extends GetxController {
           month: currentMonth,
           isCurrentMonth: true,
         );
+
         //To make history tab up to date.
-        getExpenses(year: currentYear, month: currentMonth);
+        final bc = Get.find<BudgetController>();
+        bc.selectMonthInHistory(currentMonth - 1);
         nameController.clear();
         amountController.clear();
         dateController.clear();
@@ -122,5 +125,16 @@ class ExpenseController extends GetxController {
 
     update();
     setLoading(false);
+  }
+
+  //==========================================
+  // Delete expense
+  //==========================================
+  Future<void> deleteExpense(int id) async {
+    await expenseRepo.deleteExpense(id);
+    final now = DateTime.now();
+    final currentYear = now.year;
+    final currentMonth = now.month;
+    getExpenses(year: currentYear, month: currentMonth, isCurrentMonth: true);
   }
 }

@@ -45,7 +45,7 @@ class ExpenseRepo extends GetxController {
       String where = "strftime('%Y', date) = ? AND strftime('%m', date) = ?";
 
       if (day != null) {
-        final dayStr = day.toString().padLeft(2, '0'); 
+        final dayStr = day.toString().padLeft(2, '0');
         where += " AND strftime('%d', date) = ?";
         whereArgs.add(dayStr);
       }
@@ -61,5 +61,13 @@ class ExpenseRepo extends GetxController {
       debugPrint('[expense_repo]: Error fetching expenses: $error');
       return [];
     }
+  }
+
+  //==========================================
+  // Delete expense
+  //==========================================
+  Future<void> deleteExpense(int id) async {
+    final db = await _dbHelper.database;
+    await db.delete('expenses', where: 'id = ?', whereArgs: [id]);
   }
 }

@@ -31,13 +31,29 @@ class BudgetController extends GetxController {
     'December',
   ];
 
-  final years = ['2025', '2026'];
+  final years = [
+    '2025',
+    '2026',
+    '2027',
+    '2028',
+    '2029',
+    '2030',
+    '2031',
+    '2032',
+    '2033',
+    '2034',
+  ];
   final amountController = TextEditingController();
 
   String selectedMonth = 'January';
   String selectedYear = '2025';
   int selectedMonthIndex = 0; // Add selected month index for history tab
   int selectedDayIndex = 0;
+
+  setDateDefault() {
+    selectedDayIndex = 0;
+    update();
+  }
 
   void updateMonth(String month) {
     selectedMonth = month;

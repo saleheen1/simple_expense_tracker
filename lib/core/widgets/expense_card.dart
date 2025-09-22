@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
 import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/expense_controller.dart';
+import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/expense_model.dart';
 
 class ExpanseCard extends StatelessWidget {
   final int index;
   final bool isStats;
-  final String amount;
-  final String title;
+  final ExpenseModel expense;
   const ExpanseCard({
     super.key,
     required this.index,
-    required this.amount,
-    required this.title,
-
     this.isStats = false,
+    required this.expense,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = CustomTheme.of(context);
+    final ec = Get.find<ExpenseController>();
     return Container(
       margin: EdgeInsets.only(bottom: 15),
       height: isStats ? 70 : 80,
@@ -68,7 +69,7 @@ class ExpanseCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        title,
+                        expense.description,
                         style: TextUtils.b1SemiBold(context: context),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -79,7 +80,7 @@ class ExpanseCard extends StatelessWidget {
                       //Count & limit
                       //===============================================
                       Text(
-                        '\$$amount',
+                        '\$${expense.cost}',
                         style: TextUtils.caption1(
                           context: context,
                           color: theme.primary,
@@ -100,6 +101,7 @@ class ExpanseCard extends StatelessWidget {
                     onSelected: (value) {
                       switch (value) {
                         case 'delete':
+                          ec.deleteExpense(expense.id);
                       }
                     },
                     itemBuilder: (BuildContext context) => [

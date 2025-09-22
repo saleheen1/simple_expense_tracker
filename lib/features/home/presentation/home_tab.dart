@@ -82,13 +82,7 @@ class HomeTab extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   return ExpanseCard(
                                     index: index,
-                                    title: ec
-                                        .expensesOfCurrentMonth[index]
-                                        .description,
-                                    amount: ec
-                                        .expensesOfCurrentMonth[index]
-                                        .cost
-                                        .toString(),
+                                    expense: ec.expensesOfCurrentMonth[index],
                                   );
                                 },
                               ),

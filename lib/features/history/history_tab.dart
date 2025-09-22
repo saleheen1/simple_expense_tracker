@@ -12,7 +12,7 @@ import 'package:simple_expense_tracker/core/widgets/notification_bar.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/budget_controller.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/expense_controller.dart';
 
-class HistoryTab extends StatelessWidget {
+class HistoryTab extends StatefulWidget {
   final String totalExpanse;
   final String budget;
   const HistoryTab({
@@ -20,6 +20,21 @@ class HistoryTab extends StatelessWidget {
     required this.budget,
     required this.totalExpanse,
   });
+
+  @override
+  State<HistoryTab> createState() => _HistoryTabState();
+}
+
+class _HistoryTabState extends State<HistoryTab> {
+  @override
+  void initState() {
+    super.initState();
+    final bc = Get.find<BudgetController>();
+    final now = DateTime.now();
+    final currentMonth = now.month;
+    bc.selectMonthInHistory(currentMonth - 1);
+    bc.setDateDefault();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -169,9 +184,7 @@ class HistoryTab extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return ExpanseCard(
                               index: index,
-                              title: ec.expensesOfGivenDate[index].description,
-                              amount: ec.expensesOfGivenDate[index].cost
-                                  .toString(),
+                              expense: ec.expensesOfGivenDate[index],
                             );
                           },
                         ),
