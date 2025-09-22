@@ -8,13 +8,13 @@ import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/ex
 
 class ExpanseCard extends StatelessWidget {
   final int index;
-  final bool isStats;
   final ExpenseModel expense;
+  final bool showPopupButton;
   const ExpanseCard({
     super.key,
     required this.index,
-    this.isStats = false,
     required this.expense,
+    this.showPopupButton = true,
   });
 
   @override
@@ -23,7 +23,7 @@ class ExpanseCard extends StatelessWidget {
     final ec = Get.find<ExpenseController>();
     return Container(
       margin: EdgeInsets.only(bottom: 15),
-      height: isStats ? 70 : 80,
+      height: 80,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: theme.cardColor,
@@ -95,7 +95,7 @@ class ExpanseCard extends StatelessWidget {
                 //===============================================
                 // Popup button
                 //===============================================
-                if (!isStats)
+                if (showPopupButton)
                   PopupMenuButton<String>(
                     icon: Icon(Icons.more_vert, size: 18, color: Colors.white),
                     onSelected: (value) {

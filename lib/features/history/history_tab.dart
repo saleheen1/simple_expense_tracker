@@ -189,6 +189,7 @@ class _HistoryTabState extends State<HistoryTab> {
                               return ExpanseCard(
                                 index: index,
                                 expense: ec.expensesOfGivenDate[index],
+                                showPopupButton: false,
                               );
                             },
                           ),

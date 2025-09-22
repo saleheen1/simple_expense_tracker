@@ -10,6 +10,7 @@ import 'package:simple_expense_tracker/core/widgets/home_appbar.dart';
 import 'package:simple_expense_tracker/core/widgets/no_expense_found.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/budget_controller.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/expense_controller.dart';
+import 'package:simple_expense_tracker/features/home/presentation/widgets/home_graph.dart';
 
 class HomeTab extends StatelessWidget {
   final VoidCallback onMenuTap;
@@ -61,6 +62,13 @@ class HomeTab extends StatelessWidget {
                                 ),
                               ],
                             ),
+
+                            //================================
+                            //Graph
+                            //================================
+                            gapH(25),
+                            HomeGraph(),
+
                             gapH(25),
 
                             //=========================

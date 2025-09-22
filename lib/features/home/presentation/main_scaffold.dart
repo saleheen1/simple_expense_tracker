@@ -77,17 +77,17 @@ class _MainScaffoldState extends State<MainScaffold> {
           drawer: HomeDrawer(),
           bottomNavigationBar: BottomMenu(),
           floatingActionButtonLocation: CustomFABLocation(offsetY: 10),
-          floatingActionButton: Container(
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-              color: theme.primary,
-              shape: BoxShape.circle,
-            ),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(() => AddExpensePage());
-              },
+          floatingActionButton: InkWell(
+            onTap: () {
+              Get.to(() => AddExpensePage());
+            },
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                color: theme.primary,
+                shape: BoxShape.circle,
+              ),
               child: Icon(Icons.add_rounded, color: theme.bgColor, size: 30),
             ),
           ),

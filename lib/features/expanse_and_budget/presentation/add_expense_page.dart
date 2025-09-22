@@ -80,6 +80,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                             controller: ec.nameController,
                             labelText: 'Short description',
                             hintText: 'Ex. Brought fruits',
+                            autofocus: true,
                           ),
                         ),
                         gapW(20),
