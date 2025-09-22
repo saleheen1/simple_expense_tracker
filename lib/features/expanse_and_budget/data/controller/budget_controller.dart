@@ -193,6 +193,7 @@ class BudgetController extends GetxController {
     required int month,
     required bool isCurrentMonth,
   }) async {
+    print(' 😡 year: $year, month: $month, isCurrentMonth: $isCurrentMonth');
     final double fetchedBudget = await budgetRepo.fetchMonthBudget(
       year: year,
       month: month - 1,

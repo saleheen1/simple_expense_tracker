@@ -10,8 +10,35 @@ import 'package:simple_expense_tracker/core/widgets/default_margin_widget.dart';
 import 'package:simple_expense_tracker/core/widgets/loader_widget.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/budget_controller.dart';
 
-class AddBudgetPage extends StatelessWidget {
+class AddBudgetPage extends StatefulWidget {
   const AddBudgetPage({super.key});
+
+  @override
+  State<AddBudgetPage> createState() => _AddBudgetPageState();
+}
+
+class _AddBudgetPageState extends State<AddBudgetPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setCurrentMonthAndYear();
+      loadCurrentMonthBudget();
+    });
+  }
+
+  setCurrentMonthAndYear() {
+    final bc = Get.find<BudgetController>();
+    final date = DateTime.now();
+    final monthName = date.month;
+    bc.updateMonth(bc.months[monthName - 1]);
+    bc.updateYear(date.year.toString());
+  }
+
+  loadCurrentMonthBudget() {
+    final bc = Get.find<BudgetController>();
+    bc.amountController.text = bc.budgetOfCurrentMonth.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
