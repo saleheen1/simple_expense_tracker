@@ -37,12 +37,12 @@ class ExpenseAndBudgetCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              style: TextUtils.title3(context: context),
+              style: TextUtils.b1SemiBold(context: context),
               isBudgetCard ? 'Budget' : 'Total expense',
             ),
             gapH(10),
             Text(
-              style: TextUtils.title1Bold(context: context),
+              style: TextUtils.title2(context: context),
               '\$$amount',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

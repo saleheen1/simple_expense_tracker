@@ -11,26 +11,17 @@ class HomeAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = CustomTheme.of(context);
-    final statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Container(
-      padding: EdgeInsets.only(
-        left: 15,
-        right: 15,
-        top: statusBarHeight,
-        bottom: 10,
-      ),
+      padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
       decoration: BoxDecoration(color: theme.bgColor, borderRadius: radius(3)),
       child: Row(
         children: [
-          InkWell(
-            onTap: onMenuTap,
-            child: Icon(Icons.menu, size: 30, color: theme.primary),
-          ),
+          InkWell(onTap: onMenuTap, child: Icon(Icons.menu, size: 30)),
 
           gapW(20),
 
-          Text(style: TextUtils.title1Bold(context: context), 'This month'),
+          Text(style: TextUtils.title2(context: context), 'This month'),
         ],
       ),
     );

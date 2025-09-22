@@ -87,6 +87,7 @@ class ExpenseController extends GetxController {
     bool isCurrentMonth = false,
     int? day,
   }) async {
+    setLoading(true);
     final fetchedExpenses = await expenseRepo.fetchExpenses(
       year: year,
       month: month,
@@ -116,5 +117,6 @@ class ExpenseController extends GetxController {
     );
 
     update();
+    setLoading(false);
   }
 }

@@ -43,7 +43,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     await Get.find<BudgetController>().getBudgetOfGivenMonth(
       year: currentYear,
       month: currentMonth,
-      isCurrentMonth: true
+      isCurrentMonth: true,
     );
 
     await Get.find<BudgetController>().selectMonthInHistory(currentMonth - 1);
@@ -52,7 +52,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     await Get.find<ExpenseController>().getExpenses(
       year: currentYear,
       month: currentMonth,
-      isCurrentMonth: true
+      isCurrentMonth: true,
     );
   }
 
@@ -85,14 +85,6 @@ class _MainScaffoldState extends State<MainScaffold> {
             decoration: BoxDecoration(
               color: theme.primary,
               shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: theme.primary.withValues(alpha: 0.4),
-                  spreadRadius: 1,
-                  blurRadius: 10,
-                  offset: Offset(0, 5),
-                ),
-              ],
             ),
             child: GestureDetector(
               onTap: () {

@@ -32,7 +32,7 @@ class MonthCard extends StatelessWidget {
         child: Center(
           child: Text(
             monthName,
-            style: TextUtils.title3(
+            style: TextUtils.b1SemiBold(
               context: context,
               color: isSelected ? theme.primary : Colors.white,
             ),

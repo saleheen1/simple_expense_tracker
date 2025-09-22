@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
 import 'package:simple_expense_tracker/core/utils/text_utils.dart';
+import 'package:simple_expense_tracker/core/utils/ui_const.dart';
 
 class DayCard extends StatelessWidget {
   final bool isSelected;
@@ -31,13 +32,11 @@ class DayCard extends StatelessWidget {
         height: 75,
         margin: EdgeInsets.only(right: 15),
         decoration: BoxDecoration(
-          color: isSelected
-              ? (date == 0 ? theme.primary : theme.cardColor)
-              : Colors.transparent,
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular(5),
           border: Border.all(
             color: isSelected
-                ? Colors.transparent
+                ? theme.primary
                 : Colors.white.withValues(alpha: 0.3),
             width: 1,
           ),
@@ -47,7 +46,7 @@ class DayCard extends StatelessWidget {
                 child: Text(
                   'All',
                   style: TextUtils.title3(
-                    color: isSelected ? theme.bgColor : Colors.white,
+                    color: isSelected ? theme.primary : Colors.white,
                     context: context,
                   ),
                 ),
@@ -62,6 +61,7 @@ class DayCard extends StatelessWidget {
                       context: context,
                     ),
                   ),
+                  gapH(2),
                   Text(
                     date.toString(),
                     style: TextUtils.title3(

@@ -7,6 +7,7 @@ import 'package:simple_expense_tracker/core/widgets/default_margin_widget.dart';
 import 'package:simple_expense_tracker/core/widgets/expense_and_budget_card.dart';
 import 'package:simple_expense_tracker/core/widgets/expense_card.dart';
 import 'package:simple_expense_tracker/core/widgets/month_card.dart';
+import 'package:simple_expense_tracker/core/widgets/no_expense_found.dart';
 import 'package:simple_expense_tracker/core/widgets/notification_bar.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/budget_controller.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/expense_controller.dart';
@@ -151,28 +152,36 @@ class HistoryTab extends StatelessWidget {
                     //=========================
                     //Expanses list
                     //=========================
-                    Text(
-                      style: TextUtils.title3(context: context),
-                      'Expanse list',
-                    ),
+                    if (ec.expensesOfGivenDate.isNotEmpty)
+                      Text(
+                        style: TextUtils.title3(context: context),
+                        'Expanse list',
+                      ),
                     gapH(20),
 
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: ec.expensesOfGivenDate.length,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return ExpanseCard(
-                            index: index,
-                            title: ec.expensesOfGivenDate[index].name,
-                            amount: ec.expensesOfGivenDate[index].cost
-                                .toString(),
-                          );
-                        },
+                    if (ec.expensesOfGivenDate.isNotEmpty)
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: ec.expensesOfGivenDate.length,
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return ExpanseCard(
+                              index: index,
+                              title: ec.expensesOfGivenDate[index].name,
+                              amount: ec.expensesOfGivenDate[index].cost
+                                  .toString(),
+                            );
+                          },
+                        ),
                       ),
-                    ),
+
+                    //=========================
+                    // No expenses added
+                    //=========================
+                    if (ec.expensesOfGivenDate.isEmpty)
+                      NoExpenseFound(height: 300),
                   ],
                 );
               },
