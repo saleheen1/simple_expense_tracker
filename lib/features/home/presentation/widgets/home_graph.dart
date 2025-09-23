@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:get/get.dart';
+import 'package:simple_expense_tracker/features/home/data/controller/graph_controller.dart';
 
 class HomeGraph extends StatefulWidget {
   const HomeGraph({super.key});
@@ -18,20 +20,46 @@ class _HomeGraphState extends State<HomeGraph> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: 2,
-          child: Container(
-            padding: EdgeInsets.only(left: 15, right: 15, top: 25, bottom: 15),
-            child: LineChart(mainData()),
-          ),
-        ),
-      ],
+    return GetBuilder<GraphController>(
+      builder: (gc) {
+        // Get weekly totals from controller
+        final totals = gc.expensesOfFourWeeks.map((e) => e.cost).toList();
+        // Ensure exactly 4 values
+        while (totals.length < 4) {
+          totals.add(0);
+        }
+
+        // Scale values to not exceed y-axis max (6)
+        const double yMax = 6.0;
+        final double maxVal = totals.isNotEmpty
+            ? totals.reduce((a, b) => a > b ? a : b)
+            : 0.0;
+        final double scale = (maxVal > yMax && maxVal > 0)
+            ? yMax / maxVal
+            : 1.0;
+        final scaled = totals.map((v) => (v * scale)).toList();
+
+        return Stack(
+          children: <Widget>[
+            AspectRatio(
+              aspectRatio: 2,
+              child: Container(
+                padding: EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                  top: 25,
+                  bottom: 15,
+                ),
+                child: LineChart(mainData(scaled)),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
-  LineChartData mainData() {
+  LineChartData mainData(List<double> weeklyValues) {
     return LineChartData(
       gridData: FlGridData(
         show: true,
@@ -63,25 +91,16 @@ class _HomeGraphState extends State<HomeGraph> {
               Widget text;
               switch (value.toInt()) {
                 case 0:
-                  text = Text("Sat", style: style);
+                  text = Text("Week 1", style: style);
                   break;
                 case 1:
-                  text = Text("Sun", style: style);
+                  text = Text("Week 2", style: style);
                   break;
                 case 2:
-                  text = Text("Mon", style: style);
+                  text = Text("Week 3", style: style);
                   break;
                 case 3:
-                  text = Text("Tue", style: style);
-                  break;
-                case 4:
-                  text = Text("Wed", style: style);
-                  break;
-                case 5:
-                  text = Text("Thu", style: style);
-                  break;
-                case 6:
-                  text = Text("Fri", style: style);
+                  text = Text("Week 4", style: style);
                   break;
                 default:
                   text = const Text('', style: style);
@@ -105,19 +124,16 @@ class _HomeGraphState extends State<HomeGraph> {
         border: Border.all(color: Colors.grey.withOpacity(.3), width: 1),
       ),
       minX: 0,
-      maxX: 6,
+      maxX: 3,
       minY: 0,
-      maxY: 5,
+      maxY: 6,
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, 3),
-            FlSpot(1, 4),
-            FlSpot(2, 2),
-            FlSpot(3, 5),
-            FlSpot(4, 2),
-            FlSpot(5, 3),
-            FlSpot(6, 2),
+            FlSpot(0, weeklyValues.isNotEmpty ? weeklyValues[0] : 0),
+            FlSpot(1, weeklyValues.length > 1 ? weeklyValues[1] : 0),
+            FlSpot(2, weeklyValues.length > 2 ? weeklyValues[2] : 0),
+            FlSpot(3, weeklyValues.length > 3 ? weeklyValues[3] : 0),
           ],
           isCurved: true,
           gradient: LinearGradient(

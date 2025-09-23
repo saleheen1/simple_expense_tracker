@@ -11,7 +11,7 @@ class NoExpenseFound extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = CustomTheme.of(context);
     return Container(
-      height: height ?? Get.height / 2,
+      height: height ?? Get.height / 3.3,
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

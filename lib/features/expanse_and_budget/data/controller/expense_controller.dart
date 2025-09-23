@@ -5,6 +5,7 @@ import 'package:simple_expense_tracker/core/utils/snackbars.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/budget_controller.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/model/expense_model.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/repo/expense_repo.dart';
+import 'package:simple_expense_tracker/features/home/data/controller/graph_controller.dart';
 
 class ExpenseController extends GetxController {
   final expenseRepo = Get.find<ExpenseRepo>();
@@ -74,9 +75,12 @@ class ExpenseController extends GetxController {
       return false;
     }
 
+    //To make graph up to date.
+    final gc = Get.find<GraphController>();
+    gc.getExpensesOfFourWeeks();
+
     setLoading(false);
     Get.back();
-    // return success;
     return true;
   }
 
@@ -136,5 +140,8 @@ class ExpenseController extends GetxController {
     final currentYear = now.year;
     final currentMonth = now.month;
     getExpenses(year: currentYear, month: currentMonth, isCurrentMonth: true);
+    //To make graph up to date.
+    final gc = Get.find<GraphController>();
+    gc.getExpensesOfFourWeeks();
   }
 }
