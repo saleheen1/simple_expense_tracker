@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
 import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
 import 'package:simple_expense_tracker/core/widgets/default_margin_widget.dart';
@@ -12,13 +11,16 @@ import 'package:simple_expense_tracker/features/expanse_and_budget/data/controll
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/expense_controller.dart';
 import 'package:simple_expense_tracker/features/home/presentation/widgets/home_graph.dart';
 
+
 class HomeTab extends StatelessWidget {
   final VoidCallback onMenuTap;
-  const HomeTab({super.key, required this.onMenuTap});
+  final GlobalKey addBudgetKey;
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const HomeTab({super.key, required this.onMenuTap, required this.addBudgetKey, required this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) {
-    final theme = CustomTheme.of(context);
     return SafeArea(
       child: Column(
         children: [
@@ -56,6 +58,7 @@ class HomeTab extends StatelessWidget {
                                 //=============================
                                 Expanded(
                                   child: ExpenseAndBudgetCard(
+                                    key: addBudgetKey,
                                     isBudgetCard: true,
                                     amount: '${bc.budgetOfCurrentMonth}',
                                   ),

@@ -5,7 +5,8 @@ import 'package:simple_expense_tracker/features/home/data/controller/navigation_
 import 'package:simple_expense_tracker/features/home/presentation/widgets/bottom_menu_nav_item.dart';
 
 class BottomMenu extends StatelessWidget {
-  const BottomMenu({super.key});
+  final GlobalKey historyTabKey;
+  const BottomMenu({super.key, required this.historyTabKey});
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,7 @@ class BottomMenu extends StatelessWidget {
                   ),
 
                   BottomMenuNavItem(
+                    key: historyTabKey,
                     icon: Icons.map_outlined,
                     label: 'History',
                     isActive: nc.selectedIndex == 1,

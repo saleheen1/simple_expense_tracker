@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:simple_expense_tracker/core/constants/assets_svg_constants.dart';
 import 'package:simple_expense_tracker/core/themes/custom_theme.dart';
 import 'package:simple_expense_tracker/core/utils/text_utils.dart';
 import 'package:simple_expense_tracker/core/utils/ui_const.dart';
 import 'package:simple_expense_tracker/core/widgets/appbar_common.dart';
-import 'package:simple_expense_tracker/core/widgets/button_primary.dart';
 import 'package:simple_expense_tracker/core/widgets/default_margin_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HireMePage extends StatelessWidget {
   const HireMePage({super.key});
