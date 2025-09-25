@@ -77,7 +77,7 @@ class _MainScaffoldState extends State<MainScaffold> {
       final prefs = await SharedPreferences.getInstance();
       final isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
 
-      if (!isFirstLaunch) {
+      if (isFirstLaunch) {
         await prefs.setBool('isFirstLaunch', false);
 
         createTutorial();
