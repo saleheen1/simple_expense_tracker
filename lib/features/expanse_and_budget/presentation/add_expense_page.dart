@@ -79,7 +79,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                           child: CustomInput(
                             controller: ec.nameController,
                             labelText: 'Short description',
-                            hintText: 'Ex. Brought fruits',
+                            hintText: 'Ex: Brought fruits',
                             autofocus: true,
                           ),
                         ),
