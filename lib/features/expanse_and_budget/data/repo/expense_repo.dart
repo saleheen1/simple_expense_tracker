@@ -54,9 +54,30 @@ class ExpenseRepo extends GetxController {
         'expenses',
         where: where,
         whereArgs: whereArgs,
+        orderBy: 'id DESC',
       );
 
-      return result.map((row) => ExpenseModel.fromJson(row)).toList();
+      final expenses = result.map((row) => ExpenseModel.fromJson(row)).toList();
+
+      // Additional sorting in Dart to ensure proper order
+      // expenses.sort((a, b) {
+      //   // First sort by date (newest first)
+      //   int dateComparison = b.date.compareTo(a.date);
+      //   if (dateComparison != 0) return dateComparison;
+
+      //   // If dates are equal, sort by id (newest first)
+      //   return (b.id as int).compareTo(a.id as int);
+      // });
+
+      // // Debug: Print the dates to verify sorting
+      // debugPrint('[expense_repo]: Fetched ${expenses.length} expenses');
+      // for (var expense in expenses) {
+      //   debugPrint(
+      //     '[expense_repo]: Date: ${expense.date}, Description: ${expense.description}',
+      //   );
+      // }
+
+      return expenses;
     } catch (error) {
       debugPrint('[expense_repo]: Error fetching expenses: $error');
       return [];

@@ -103,7 +103,12 @@ class _MainScaffoldState extends State<MainScaffold> {
           backgroundColor: CustomTheme.of(context).bgColor,
           body: pages[nc.selectedIndex],
           drawer: HomeDrawer(),
-          bottomNavigationBar: BottomMenu(historyTabKey: historyTabKey),
+          bottomNavigationBar: Container(
+            margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).padding.bottom,
+            ),
+            child: BottomMenu(historyTabKey: historyTabKey),
+          ),
           floatingActionButtonLocation: CustomFABLocation(offsetY: 10),
           floatingActionButton: InkWell(
             key: addExpenseKey,
