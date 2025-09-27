@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_expense_tracker/core/widgets/update_helper.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/budget_controller.dart';
 import 'package:simple_expense_tracker/features/expanse_and_budget/data/controller/expense_controller.dart';
 import 'package:simple_expense_tracker/features/home/presentation/widgets/home_navigation_helper.dart';
@@ -38,9 +39,6 @@ class _MainScaffoldState extends State<MainScaffold> {
   }
 
   loadAtStart() async {
-    /// Print the physical location of the database file on device/emulator
-    final dbPath = join(await getDatabasesPath(), 'simple_expense_tracker.db');
-
     // Get current local year & month
     final now = DateTime.now();
     final currentYear = now.year;
@@ -62,6 +60,10 @@ class _MainScaffoldState extends State<MainScaffold> {
       month: currentMonth,
       isCurrentMonth: true,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkUpdate();
+    });
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
