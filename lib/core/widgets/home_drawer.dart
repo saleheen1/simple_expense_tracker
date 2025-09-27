@@ -49,30 +49,6 @@ class HomeDrawer extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // gapH(30),
-
-                      // GestureDetector(
-                      //   onTap: () async {
-                      //     final url = Uri.parse(
-                      //       'https://play.google.com/store/apps/details?id=com.easy.quran.learning.inshirah',
-                      //     );
-                      //       await launchUrl(
-                      //         url,
-                      //         mode: LaunchMode.externalApplication,
-                      //       );
-
-                      //   },
-                      //   child: Row(
-                      //     children: [
-                      //       Icon(Icons.star_rounded, color: theme.primary),
-                      //       gapW(15),
-                      //       Text(
-                      //         'Rate this app',
-                      //         style: TextUtils.title3(context: context),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                       gapH(30),
 
                       GestureDetector(
@@ -101,6 +77,28 @@ class HomeDrawer extends StatelessWidget {
                             gapW(15),
                             Text(
                               'My other apps',
+                              style: TextUtils.title3(context: context),
+                            ),
+                          ],
+                        ),
+                      ),
+                      gapH(30),
+
+                      GestureDetector(
+                        onTap: () {
+                          launchUrl(
+                            Uri.parse(
+                              'https://play.google.com/store/apps/details?id=com.inshirahtech.simple_expense_tracker',
+                            ),
+                            mode: LaunchMode.externalApplication,
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Icon(Icons.star_border, color: theme.primary),
+                            gapW(15),
+                            Text(
+                              'Rate this app',
                               style: TextUtils.title3(context: context),
                             ),
                           ],

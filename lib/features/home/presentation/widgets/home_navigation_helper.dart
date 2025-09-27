@@ -26,7 +26,7 @@ class HomeNavigationHelper {
                 children: [
                   gapH(55),
                   Text(
-                    'Click here to go to the add expense page',
+                    'Click here to add expense',
                     style: TextUtils.title3(context: context),
                     textAlign: TextAlign.center,
                   ),
@@ -57,7 +57,7 @@ class HomeNavigationHelper {
                 children: [
                   gapH(55),
                   Text(
-                    'Click here to go to the add budget page',
+                    'Click here to add budget',
                     style: TextUtils.title3(context: context),
                     textAlign: TextAlign.center,
                   ),
@@ -88,7 +88,7 @@ class HomeNavigationHelper {
                 children: [
                   gapH(55),
                   Text(
-                    'Click here to go to history tab',
+                    'Click here to see history',
                     style: TextUtils.title3(context: context),
                     textAlign: TextAlign.center,
                   ),
